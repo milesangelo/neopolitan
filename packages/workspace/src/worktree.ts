@@ -90,7 +90,10 @@ export class GitWorkspaceManager {
     const gate = new Promise<void>((r) => {
       release = r;
     });
-    this.locks.set(key, prev.then(() => gate));
+    this.locks.set(
+      key,
+      prev.then(() => gate),
+    );
     await prev;
     try {
       return await fn();
@@ -176,7 +179,11 @@ export class GitWorkspaceManager {
 
   async inspectWorktreeTier(
     worktreePath: string,
-    options?: { readonly isInUse?: boolean; readonly baseCommit?: string; readonly defaultBranch?: string },
+    options?: {
+      readonly isInUse?: boolean;
+      readonly baseCommit?: string;
+      readonly defaultBranch?: string;
+    },
   ): Promise<WorktreeCleanupTier> {
     try {
       const status = await git(worktreePath, ['status', '--porcelain']);

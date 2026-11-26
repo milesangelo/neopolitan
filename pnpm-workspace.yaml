@@ -5,6 +5,7 @@ packages:
 autoInstallPeers: false
 
 allowBuilds:
+  '@biomejs/biome': true
   esbuild: true
 
 ignoredOptionalDependencies:

@@ -1,14 +1,11 @@
 import { randomUUID } from 'node:crypto';
 import * as acp from '@agentclientprotocol/sdk/unstable';
-import { z } from 'zod';
 import {
-  EventHub,
-  classifyProviderFailure,
-  createPolicyGateMiddleware,
   type AdapterDependencies,
   type AgentEvent,
   type AgentSession,
   type DispatchReceipt,
+  EventHub,
   type ExecutionRuntime,
   type GateRequest,
   type GateResolution,
@@ -24,9 +21,12 @@ import {
   type SessionAnchor,
   type SteerTurnInput,
   type ToolKind,
+  classifyProviderFailure,
+  createPolicyGateMiddleware,
 } from '@neopolitan/core';
+import { z } from 'zod';
 import { assertPathWithinWorkspace } from './client-policy.js';
-import { resolveAcpFlavor, type AcpFlavor } from './flavors.js';
+import { type AcpFlavor, resolveAcpFlavor } from './flavors.js';
 import { createHardenedAcpStream } from './stream-wrapper.js';
 
 export interface AcpDriverConfig {
@@ -96,7 +96,9 @@ export const ACP_BASE_CAPABILITIES: ProviderCapabilities = {
 export function createAcpDriver(config: AcpDriverConfig = {}): ProviderDriver<AcpDriverConfig> {
   const id = config.id ?? 'acp';
   const flavor =
-    typeof config.flavor === 'object' ? config.flavor : resolveAcpFlavor(config.flavor ?? config.command ?? id);
+    typeof config.flavor === 'object'
+      ? config.flavor
+      : resolveAcpFlavor(config.flavor ?? config.command ?? id);
 
   return {
     id,
@@ -113,7 +115,11 @@ export function createAcpDriver(config: AcpDriverConfig = {}): ProviderDriver<Ac
       }
       const resolved = await runtime.which(cmd, ctx.env);
       if (!resolved) {
-        return { available: false, reason: `Executable "${cmd}" not found on PATH`, authStatus: 'unavailable' };
+        return {
+          available: false,
+          reason: `Executable "${cmd}" not found on PATH`,
+          authStatus: 'unavailable',
+        };
       }
       return { available: true, executablePath: resolved, authStatus: 'unknown' };
     },
@@ -243,9 +249,7 @@ class AcpSession implements AgentSession {
       });
 
     this.connection =
-      'writable' in this.target
-        ? clientApp.connect(this.target)
-        : clientApp.connect(this.target);
+      'writable' in this.target ? clientApp.connect(this.target) : clientApp.connect(this.target);
 
     if (this.proc) {
       void this.proc.exited.then((res) => {
@@ -281,7 +285,10 @@ class AcpSession implements AgentSession {
         env: Object.entries(m.env ?? {}).map(([name, value]) => ({ name, value })),
       }));
 
-    if (this.openInput.resumeAnchor?.providerId === 'acp' && 'sessionId' in this.openInput.resumeAnchor) {
+    if (
+      this.openInput.resumeAnchor?.providerId === 'acp' &&
+      'sessionId' in this.openInput.resumeAnchor
+    ) {
       const targetId = this.openInput.resumeAnchor.sessionId;
       await this.runWithOptionalIdleReadiness(
         this.connection.agent.request(
@@ -297,7 +304,9 @@ class AcpSession implements AgentSession {
         {
           cwd: this.openInput.cwd,
           mcpServers: acpMcpServers,
-          ...(this.openInput.systemPrompt ? { _meta: { systemPrompt: this.openInput.systemPrompt } } : {}),
+          ...(this.openInput.systemPrompt
+            ? { _meta: { systemPrompt: this.openInput.systemPrompt } }
+            : {}),
         },
         { cancellationSignal: signal },
       );
@@ -352,9 +361,10 @@ class AcpSession implements AgentSession {
       rawEvent: { protocol: 'acp', payload: { prompt: input.prompt } },
     });
 
-    const promptText = this.openInput.contextPrelude && !this.activeTextByBlock.size
-      ? `${this.openInput.contextPrelude}\n\n${input.prompt}`
-      : input.prompt;
+    const promptText =
+      this.openInput.contextPrelude && !this.activeTextByBlock.size
+        ? `${this.openInput.contextPrelude}\n\n${input.prompt}`
+        : input.prompt;
 
     const meta = this.flavor.promptMeta?.({ cwd: this.openInput.cwd });
     const promptPromise = this.connection.agent.request(
@@ -369,7 +379,9 @@ class AcpSession implements AgentSession {
 
     void promptPromise.then(
       (res) => {
-        const completedText = this.activeBlockId ? this.activeTextByBlock.get(this.activeBlockId) : undefined;
+        const completedText = this.activeBlockId
+          ? this.activeTextByBlock.get(this.activeBlockId)
+          : undefined;
         if (this.activeBlockId && completedText !== undefined) {
           this.hub.emit({
             type: 'assistant.completed',

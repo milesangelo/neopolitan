@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
-  agentEventSchema,
   type AgentEvent,
   type ProviderId,
   type SessionAnchor,
+  agentEventSchema,
 } from '@neopolitan/core';
 
 export interface SessionSnapshot {
@@ -170,8 +170,15 @@ export class JsonlEventStore implements EventStore {
     const afterSeq = options?.afterSeq ?? 0;
     const result: AgentEvent[] = [];
     for (const line of raw.split('\n')) {
-      if (!line) continue;
-      const parsed = agentEventSchema.safeParse(JSON.parse(line));
+      if (!line.trim()) continue;
+      let rawObj: unknown;
+      try {
+        rawObj = JSON.parse(line);
+      } catch {
+        // Recover cleanly if the final JSONL record was truncated mid-crash.
+        continue;
+      }
+      const parsed = agentEventSchema.safeParse(rawObj);
       if (parsed.success && parsed.data.seq > afterSeq) {
         result.push(parsed.data as AgentEvent);
       }

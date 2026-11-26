@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { afterEach, describe, expect, it } from 'vitest';
 import { ThreadInUseError } from '@neopolitan/core';
 import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
 import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { afterEach, describe, expect, it } from 'vitest';
 import {
   CodexAppServerClient,
   createCodexDriver,
@@ -103,7 +103,7 @@ describe('@neopolitan/adapter-codex hardening', () => {
   it('sanitizes lone UTF-16 surrogates, deduplicates rate limits, and detects hung/busy servers', async () => {
     const validEmoji = 'hi 😀';
     expect(sanitizeLoneSurrogates(validEmoji)).toBe(validEmoji);
-    const broken = `hi \ud800 there \udfff`;
+    const broken = 'hi \ud800 there \udfff';
     expect(sanitizeLoneSurrogates(broken)).toBe('hi \ufffd there \ufffd');
 
     const dedupe = createRateLimitDeduplicator();

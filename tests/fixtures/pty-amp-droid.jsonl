@@ -1,0 +1,6 @@
+{"agent":"amp","chunk":"\u001b]7501;working\u0007\u001b[32mThinking...\u001b[0m\r\n"}
+{"agent":"amp","chunk":"Running workspace checks\r\n"}
+{"agent":"amp","chunk":"\u001b]7501;done\u0007"}
+{"agent":"droid","chunk":"\u001b]7501;state=blocked\u001b\\Waiting on shell approval\r\n"}
+{"agent":"droid","chunk":"\u001b]7501;state=waiting\u001b\\Ready\r\n"}
+{"agent":"droid","exit":{"code":17,"signal":null}}

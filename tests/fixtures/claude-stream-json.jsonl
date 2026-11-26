@@ -1,0 +1,6 @@
+{"type":"system","subtype":"SessionStart:resume","session_id":"stale-boot-uuid"}
+{"type":"system","subtype":"init","session_id":"claude-golden-sess-01"}
+{"type":"assistant","uuid":"msg-01","session_id":"claude-golden-sess-01","message":{"usage":{"input_tokens":140,"cache_read_input_tokens":40,"output_tokens":18},"content":[{"type":"tool_use","id":"toolu_01","name":"Bash","input":{"command":"pnpm test"}},{"type":"text","text":"Running tests and inspecting output."}]}}
+[debug] non-json noise emitted on stdout should not crash ndjson framing
+{"type":"assistant","uuid":"msg-02","session_id":"claude-golden-sess-01","message":{"usage":{"input_tokens":0,"output_tokens":32},"content":[{"type":"text","text":"All 64 tests passed cleanly."}]}}
+{"type":"result","is_error":false,"session_id":"claude-golden-sess-01"}

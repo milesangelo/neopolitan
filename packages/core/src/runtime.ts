@@ -58,7 +58,9 @@ export interface ExecutionRuntime {
   realpath(targetPath: string): Promise<string>;
   exists(targetPath: string): Promise<boolean>;
   mkdir(targetPath: string, options?: { readonly recursive?: boolean }): Promise<void>;
-  readdir(targetPath: string): Promise<ReadonlyArray<{ readonly name: string; readonly isDirectory: boolean }>>;
+  readdir(
+    targetPath: string,
+  ): Promise<ReadonlyArray<{ readonly name: string; readonly isDirectory: boolean }>>;
   readFile(targetPath: string, encoding?: BufferEncoding): Promise<string>;
   writeFile(targetPath: string, content: string): Promise<void>;
   stat(targetPath: string): Promise<{ isFile: boolean; isDirectory: boolean; size: number } | null>;

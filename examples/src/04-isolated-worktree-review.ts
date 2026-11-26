@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { formatReviewTargetPrompt, type ReviewTarget } from '@neopolitan/core';
+import { type ReviewTarget, formatReviewTargetPrompt } from '@neopolitan/core';
 import { GitWorkspaceManager } from '@neopolitan/workspace';
 
 const execFile = promisify(execFileCb);
@@ -19,8 +19,16 @@ async function main(): Promise<void> {
     await execFile('git', ['init', '-b', 'main'], { cwd: repoRoot });
     await execFile('git', ['config', 'user.email', 'dev@example.com'], { cwd: repoRoot });
     await execFile('git', ['config', 'user.name', 'Dev'], { cwd: repoRoot });
-    await fs.writeFile(path.join(repoRoot, 'AGENTS.md'), '# Project Rules\nRun pnpm test.\n', 'utf8');
-    await fs.writeFile(path.join(repoRoot, 'src.ts'), 'export const add = (a: number, b: number) => a + b;\n', 'utf8');
+    await fs.writeFile(
+      path.join(repoRoot, 'AGENTS.md'),
+      '# Project Rules\nRun pnpm test.\n',
+      'utf8',
+    );
+    await fs.writeFile(
+      path.join(repoRoot, 'src.ts'),
+      'export const add = (a: number, b: number) => a + b;\n',
+      'utf8',
+    );
     await execFile('git', ['add', '.'], { cwd: repoRoot });
     await execFile('git', ['commit', '-m', 'Initial commit'], { cwd: repoRoot });
 
@@ -31,7 +39,10 @@ async function main(): Promise<void> {
     });
 
     const instructions = await workspace.discoverInstructions(worktreeDir);
-    console.log('[1] Discovered instructions:', instructions.map((i) => i.kind));
+    console.log(
+      '[1] Discovered instructions:',
+      instructions.map((i) => i.kind),
+    );
 
     const heads = await workspace.snapshotHeads(handle);
     console.log('[2] Snapshot head commit:', heads.app);
@@ -63,7 +74,7 @@ async function main(): Promise<void> {
       ],
       instructions: 'Verify edge cases and formatting.',
     };
-    console.log('[4] Formatted ReviewTarget prompt:\n' + formatReviewTargetPrompt(reviewTarget));
+    console.log(`[4] Formatted ReviewTarget prompt:\n${formatReviewTargetPrompt(reviewTarget)}`);
 
     // Start & stop an isolated preview dev server outside agent locks
     const devServer = await workspace.startDevServer({

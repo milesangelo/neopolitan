@@ -175,7 +175,9 @@ export function createPolicyGateMiddleware(options?: PolicyGateOptions): GateMid
       if (
         context.mode === 'auto_accept_edits' &&
         !request.ruleForced &&
-        (request.category === 'file_write' || request.category === 'file_read' || request.category === 'patch')
+        (request.category === 'file_write' ||
+          request.category === 'file_read' ||
+          request.category === 'patch')
       ) {
         return { decision: 'allow_once', source: 'policy' };
       }

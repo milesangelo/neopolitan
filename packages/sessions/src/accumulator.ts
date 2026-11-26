@@ -1,8 +1,24 @@
-import type { AgentEvent, GateRequest, GateResolution, PlanTodoItem, ToolKind } from '@neopolitan/core';
+import type {
+  AgentEvent,
+  GateRequest,
+  GateResolution,
+  PlanTodoItem,
+  ToolKind,
+} from '@neopolitan/core';
 
 export type ContentBlock =
-  | { readonly kind: 'text'; readonly blockId: string; readonly text: string; readonly completed: boolean }
-  | { readonly kind: 'reasoning'; readonly blockId: string; readonly text: string; readonly completed: boolean }
+  | {
+      readonly kind: 'text';
+      readonly blockId: string;
+      readonly text: string;
+      readonly completed: boolean;
+    }
+  | {
+      readonly kind: 'reasoning';
+      readonly blockId: string;
+      readonly text: string;
+      readonly completed: boolean;
+    }
   | {
       readonly kind: 'tool_call';
       readonly blockId: string;
@@ -14,9 +30,24 @@ export type ContentBlock =
       readonly output?: unknown;
       readonly stdoutTail?: string;
     }
-  | { readonly kind: 'file_diff'; readonly blockId: string; readonly paths: ReadonlyArray<string>; readonly patch: string }
-  | { readonly kind: 'plan'; readonly blockId: string; readonly todos: ReadonlyArray<PlanTodoItem>; readonly markdown?: string }
-  | { readonly kind: 'gate'; readonly blockId: string; readonly request: GateRequest; readonly resolution?: GateResolution };
+  | {
+      readonly kind: 'file_diff';
+      readonly blockId: string;
+      readonly paths: ReadonlyArray<string>;
+      readonly patch: string;
+    }
+  | {
+      readonly kind: 'plan';
+      readonly blockId: string;
+      readonly todos: ReadonlyArray<PlanTodoItem>;
+      readonly markdown?: string;
+    }
+  | {
+      readonly kind: 'gate';
+      readonly blockId: string;
+      readonly request: GateRequest;
+      readonly resolution?: GateResolution;
+    };
 
 /**
  * Pure deterministic event-to-block accumulator (synthesizing Traycer's `agent-runtime-accumulator`

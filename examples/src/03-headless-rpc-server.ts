@@ -1,7 +1,7 @@
-import { ProviderRegistry, type AgentEvent } from '@neopolitan/core';
-import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
+import { type AgentEvent, ProviderRegistry } from '@neopolitan/core';
 import { AgentRpcClient, AgentRpcServer } from '@neopolitan/server';
-import { createMockDriver, MockExecutionRuntime } from '@neopolitan/testing';
+import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
 
 async function main(): Promise<void> {
   const runtime = new MockExecutionRuntime();
@@ -31,7 +31,9 @@ async function main(): Promise<void> {
 
     const sseAbort = new AbortController();
     const sseLoop = (async () => {
-      for await (const ev of httpClient.subscribeEvents(opened.sessionId, { signal: sseAbort.signal })) {
+      for await (const ev of httpClient.subscribeEvents(opened.sessionId, {
+        signal: sseAbort.signal,
+      })) {
         if (ev.type === 'gate.requested') {
           console.log(
             '[2] HTTP+SSE client received gate:',
@@ -56,7 +58,10 @@ async function main(): Promise<void> {
     await wsClient.connectWebSocket();
     const wsAbort = new AbortController();
     const replayed: AgentEvent[] = [];
-    for await (const ev of wsClient.subscribeEvents(opened.sessionId, { afterSeq: 0, signal: wsAbort.signal })) {
+    for await (const ev of wsClient.subscribeEvents(opened.sessionId, {
+      afterSeq: 0,
+      signal: wsAbort.signal,
+    })) {
       replayed.push(ev);
       if (ev.type === 'turn.completed') {
         wsAbort.abort();

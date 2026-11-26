@@ -1,13 +1,14 @@
 import { randomUUID } from 'node:crypto';
-import type {
-  AdapterDependencies,
-  AgentEvent,
-  AgentSession,
-  ModelSelection,
-  OpenSessionInput,
-  ProviderId,
-  ProviderRegistry,
-  SessionAnchor,
+import {
+  type AdapterDependencies,
+  type AgentEvent,
+  type AgentSession,
+  type ModelSelection,
+  type OpenSessionInput,
+  type ProviderId,
+  type ProviderRegistry,
+  type SessionAnchor,
+  redactSecrets,
 } from '@neopolitan/core';
 import type { EventStore, SessionSnapshot } from './event-store.js';
 
@@ -92,22 +93,24 @@ export async function compileHandoffBundle(input: {
     } else if (ev.type === 'tool.completed') {
       turnLines.push(`[Tool:${ev.callId}] status=${ev.status}`);
     } else if (ev.type === 'plan.updated') {
-      turnLines.push(
-        `[Plan]\n${ev.todos.map((t) => `- [${t.status}] ${t.title}`).join('\n')}`,
-      );
+      turnLines.push(`[Plan]\n${ev.todos.map((t) => `- [${t.status}] ${t.title}`).join('\n')}`);
     }
   }
 
-  let recentTurnsMarkdown = turnLines.join('\n\n');
+  let recentTurnsMarkdown = redactSecrets(turnLines.join('\n\n'));
   if (recentTurnsMarkdown.length > Math.floor(maxChars * 0.6)) {
     recentTurnsMarkdown = recentTurnsMarkdown.slice(-Math.floor(maxChars * 0.6));
   }
 
   const gitStatusSummary = input.gitDiff
-    ? input.gitDiff.slice(0, Math.floor(maxChars * 0.25))
+    ? redactSecrets(input.gitDiff).slice(0, Math.floor(maxChars * 0.25))
     : undefined;
 
-  const combined = [summaryMarkdown, recentTurnsMarkdown, gitStatusSummary]
+  const redactedSummary = summaryMarkdown
+    ? redactSecrets(summaryMarkdown)
+    : `Handoff from ${input.sourceSnapshot.providerId} (seq <= ${coveredUntilSeq})`;
+
+  const combined = [redactedSummary, recentTurnsMarkdown, gitStatusSummary]
     .filter(Boolean)
     .join('\n\n');
 
@@ -118,7 +121,7 @@ export async function compileHandoffBundle(input: {
     strategy: 'compiled-prelude',
     compiledPrelude: {
       coveredUntilSeq,
-      summaryMarkdown: summaryMarkdown || `Handoff from ${input.sourceSnapshot.providerId} (seq <= ${coveredUntilSeq})`,
+      summaryMarkdown: redactedSummary,
       recentTurnsMarkdown,
       gitStatusSummary,
       estimatedTokens: estimateTokens(combined),
@@ -139,7 +142,10 @@ export class SessionManager {
 
   async open(
     providerId: ProviderId,
-    input: OpenSessionInput & { readonly driverConfig?: Record<string, unknown>; readonly profileId?: string },
+    input: OpenSessionInput & {
+      readonly driverConfig?: Record<string, unknown>;
+      readonly profileId?: string;
+    },
     signal?: AbortSignal,
   ): Promise<AgentSession> {
     const driver = this.registry.require(providerId);
@@ -158,11 +164,15 @@ export class SessionManager {
       updatedAt: Date.now(),
     });
 
-    const pump = this.pumpEvents(sessionId, providerId, input.cwd, input.profileId, session).finally(
-      () => {
-        this.pumpPromises.delete(sessionId);
-      },
-    );
+    const pump = this.pumpEvents(
+      sessionId,
+      providerId,
+      input.cwd,
+      input.profileId,
+      session,
+    ).finally(() => {
+      this.pumpPromises.delete(sessionId);
+    });
     this.pumpPromises.set(sessionId, pump);
     return session;
   }

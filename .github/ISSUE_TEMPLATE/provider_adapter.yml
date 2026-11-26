@@ -1,0 +1,31 @@
+name: Provider Adapter Proposal
+description: Request or propose support for a new coding-agent harness or ACP flavor
+title: "[Adapter]: "
+labels: ["enhancement", "adapter"]
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Coding-Agent CLI / Provider Name
+      placeholder: "e.g., gemini, goose, aider"
+    validations:
+      required: true
+  - type: dropdown
+    id: transport
+    attributes:
+      label: Wire Protocol / Transport
+      options:
+        - ACP (Agent Client Protocol)
+        - Custom NDJSON / JSON-RPC over stdio
+        - HTTP / SSE
+        - PTY + HTTP hooks / OSC 7501
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: docs
+    attributes:
+      label: Protocol Docs & Capabilities
+      description: Link to CLI docs, auth model, and whether resume/fork/gating are supported.
+    validations:
+      required: true

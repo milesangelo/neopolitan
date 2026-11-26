@@ -2,13 +2,13 @@ import { z } from 'zod';
 import type { SanitizedProviderFailure } from './errors.js';
 import type { GateRequest, GateResolution } from './gate.js';
 import {
-  providerCapabilitiesSchema,
   type PlanTodoItem,
   type ProviderCapabilities,
   type ProviderId,
   type SessionAnchor,
   type TokenUsage,
   type ToolKind,
+  providerCapabilitiesSchema,
 } from './types.js';
 
 export interface AgentEventBase {
@@ -255,7 +255,17 @@ export const agentEventSchema = z.discriminatedUnion('type', [
     blockId: z.string(),
     callId: z.string(),
     name: z.string(),
-    kind: z.enum(['command', 'file_read', 'file_write', 'file_search', 'web_search', 'mcp', 'subagent', 'plan', 'other']),
+    kind: z.enum([
+      'command',
+      'file_read',
+      'file_write',
+      'file_search',
+      'web_search',
+      'mcp',
+      'subagent',
+      'plan',
+      'other',
+    ]),
     input: z.unknown(),
   }),
   baseEventSchema.extend({
@@ -294,7 +304,9 @@ export const agentEventSchema = z.discriminatedUnion('type', [
   }),
   baseEventSchema.extend({
     type: z.literal('gate.requested'),
-    request: z.object({ kind: z.enum(['approval', 'elicitation']), requestId: z.string() }).passthrough(),
+    request: z
+      .object({ kind: z.enum(['approval', 'elicitation']), requestId: z.string() })
+      .passthrough(),
   }),
   baseEventSchema.extend({
     type: z.literal('gate.resolved'),

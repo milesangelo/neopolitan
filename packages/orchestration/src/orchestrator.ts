@@ -131,10 +131,7 @@ export class Orchestrator {
     return this.inboxes.get(agentId) ?? [];
   }
 
-  subscribeInbox(
-    agentId: string,
-    listener: (msg: AgentMessageEnvelope) => void,
-  ): () => void {
+  subscribeInbox(agentId: string, listener: (msg: AgentMessageEnvelope) => void): () => void {
     let set = this.inboxListeners.get(agentId);
     if (!set) {
       set = new Set();

@@ -1,12 +1,12 @@
-import { describe, expect, it } from 'vitest';
 import {
-  providerCapabilitiesSchema,
   type AgentEvent,
   type AgentSession,
   type GateRequest,
   type OpenSessionInput,
   type ProviderAdapter,
+  providerCapabilitiesSchema,
 } from '@neopolitan/core';
+import { describe, expect, it } from 'vitest';
 
 export interface ConformanceHarnessContext {
   openSession(input?: Partial<OpenSessionInput>): Promise<AgentSession>;
@@ -168,6 +168,61 @@ export function runProviderConformanceSuite(
         await consumer;
 
         expect(events.some((e) => e.type === 'session.ended')).toBe(true);
+      } finally {
+        await ctx.teardown?.();
+      }
+    });
+
+    it('preserves monotonic seq numbering and deterministic afterSeq replay', async () => {
+      const ctx = await createHarness();
+      try {
+        await using session = await ctx.openSession();
+        const allEvents: AgentEvent[] = [];
+        const ac = new AbortController();
+
+        const consumer = (async () => {
+          for await (const ev of session.events({ signal: ac.signal })) {
+            allEvents.push(ev);
+            if (ev.type === 'turn.completed') {
+              ac.abort();
+            }
+          }
+        })();
+
+        await session.sendTurn({ prompt: 'Verify sequence replay' });
+        await consumer;
+
+        expect(allEvents.length).toBeGreaterThanOrEqual(2);
+        for (let i = 1; i < allEvents.length; i++) {
+          expect(allEvents[i]!.seq).toBeGreaterThan(allEvents[i - 1]!.seq);
+        }
+
+        const cutoff = allEvents[0]!.seq;
+        const expectedReplay = allEvents.filter(
+          (e) => e.seq > cutoff && !('ephemeral' in e && e.ephemeral),
+        );
+        const replayEvents: AgentEvent[] = [];
+        const replayAc = new AbortController();
+        for await (const ev of session.events({ afterSeq: cutoff, signal: replayAc.signal })) {
+          replayEvents.push(ev);
+          if (ev.type === 'turn.completed') {
+            replayAc.abort();
+          }
+        }
+        expect(replayEvents.every((e) => e.seq > cutoff)).toBe(true);
+        expect(replayEvents.map((e) => e.seq)).toEqual(expectedReplay.map((e) => e.seq));
+      } finally {
+        await ctx.teardown?.();
+      }
+    });
+
+    it('reports unknown dispatch receipt semantics cleanly when configured', async () => {
+      const ctx = await createHarness();
+      try {
+        if (!ctx.triggerUnknownOutcomePrompt) return;
+        await using session = await ctx.openSession();
+        const receipt = await session.sendTurn({ prompt: ctx.triggerUnknownOutcomePrompt });
+        expect(receipt.outcome).toBe('unknown');
       } finally {
         await ctx.teardown?.();
       }

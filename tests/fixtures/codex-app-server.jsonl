@@ -1,0 +1,8 @@
+{"kind":"server_response","method":"initialize","result":{"serverInfo":{"name":"codex-app-server","version":"0.1.0"}}}
+{"kind":"server_response","method":"thread/start","result":{"thread":{"id":"codex-golden-thread-01"}}}
+{"kind":"server_response","method":"thread/fork","result":{"thread":{"id":"codex-golden-thread-fork-02"}}}
+{"kind":"server_response","method":"turn/start","result":{"turn":{"id":"codex-turn-01"}}}
+{"kind":"server_request","id":501,"method":"item/fileChange/requestApproval","params":{"reason":"Write src/fix.ts"}}
+{"kind":"server_request","id":502,"method":"item/tool/requestUserInput","params":{"prompt":"Select target deployment region"}}
+{"kind":"notification","method":"item/agentMessage/delta","params":{"itemId":"msg-codex-1","delta":"Applied patch \ud800 cleanly."}}
+{"kind":"notification","method":"turn/completed","params":{"turn":{"id":"codex-turn-01","status":"completed"}}}

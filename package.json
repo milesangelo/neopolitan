@@ -1,10 +1,10 @@
 {
-  "name": "neopolitan",
+  "name": "neopolitan-monorepo",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "license": "MIT",
-  "description": "Provider-agnostic TypeScript SDK for coding-agent harnesses (Claude Code, Codex, ACP, PTY) — every flavor in one container.",
+  "description": "Monorepo for Neopolitan (@neopolitan/*) — provider-agnostic TypeScript SDK for coding-agent harnesses.",
   "repository": {
     "type": "git",
     "url": "https://github.com/milesangelo/neopolitan.git"
@@ -16,8 +16,21 @@
   "scripts": {
     "build": "tsc -b",
     "typecheck": "tsc -b",
+    "clean": "node scripts/clean.mjs",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check:boundaries": "node scripts/check-boundaries.mjs",
     "test": "vitest run",
-    "clean": "rm -rf packages/*/dist packages/*/*.tsbuildinfo examples/dist examples/*.tsbuildinfo",
+    "test:coverage": "vitest run --coverage",
+    "test:packed": "node scripts/test-packed.mjs",
+    "test:live": "node scripts/test-live-smoke.mjs",
+    "docs:api": "typedoc",
+    "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm run build && changeset publish",
     "example:handoff": "tsc -b && node examples/dist/01-provider-swap-handoff.js",
     "example:acp": "tsc -b && node examples/dist/02-acp-client-and-gates.js",
     "example:server": "tsc -b && node examples/dist/03-headless-rpc-server.js",
@@ -26,9 +39,17 @@
     "examples:all": "tsc -b && node examples/dist/01-provider-swap-handoff.js && node examples/dist/02-acp-client-and-gates.js && node examples/dist/03-headless-rpc-server.js && node examples/dist/04-isolated-worktree-review.js && node examples/dist/05-multi-agent-orchestration.js"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.29.4",
     "@types/node": "^22.15.0",
     "@types/ws": "^8.18.1",
+    "@vitest/coverage-v8": "^3.2.4",
+    "publint": "^0.3.12",
+    "typedoc": "^0.28.4",
+    "typedoc-plugin-markdown": "^4.6.4",
     "typescript": "^5.8.3",
+    "vitepress": "^1.6.3",
     "vitest": "^3.2.4"
   }
 }

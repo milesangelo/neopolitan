@@ -17,7 +17,7 @@
       "default": "./dist/conformance.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -b"
   },
@@ -27,5 +27,29 @@
   },
   "peerDependencies": {
     "vitest": ">=2.0.0"
+  },
+  "description": "Vitest-free mock runtime and mock provider driver for Neopolitan, plus shared @neopolitan/testing/conformance test suite.",
+  "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "testing"],
+  "homepage": "https://milesangelo.github.io/neopolitan/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesangelo/neopolitan.git",
+    "directory": "packages/testing"
+  },
+  "bugs": {
+    "url": "https://github.com/milesangelo/neopolitan/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "peerDependenciesMeta": {
+    "vitest": {
+      "optional": true
+    }
   }
 }

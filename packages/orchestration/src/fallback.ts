@@ -50,8 +50,7 @@ export class FallbackPolicyEngine {
     readonly attemptedModels?: ReadonlySet<string>;
     readonly retryAfterMs?: number;
   }): FallbackAction {
-    const ladder =
-      this.policy.reasonOverrides?.[input.failureClass] ?? this.policy.ladder;
+    const ladder = this.policy.reasonOverrides?.[input.failureClass] ?? this.policy.ladder;
 
     for (const rung of ladder) {
       if (rung === 'profile' && input.alternateProfileIds) {
@@ -74,8 +73,10 @@ export class FallbackPolicyEngine {
         if (group) {
           const next = group.models.find(
             (m) =>
-              !(m.providerId === input.currentProviderId && modelMatchesPattern(input.currentModel, m.modelPattern)) &&
-              !input.attemptedModels?.has(`${m.providerId}:${m.modelPattern}`),
+              !(
+                m.providerId === input.currentProviderId &&
+                modelMatchesPattern(input.currentModel, m.modelPattern)
+              ) && !input.attemptedModels?.has(`${m.providerId}:${m.modelPattern}`),
           );
           if (next) {
             return {

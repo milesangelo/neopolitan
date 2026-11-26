@@ -1,5 +1,4 @@
 import http from 'node:http';
-import { WebSocketServer, type WebSocket } from 'ws';
 import type {
   AgentEvent,
   AgentSession,
@@ -10,6 +9,7 @@ import type {
   SteerTurnInput,
 } from '@neopolitan/core';
 import type { EventStore, SessionManager } from '@neopolitan/sessions';
+import { type WebSocket, WebSocketServer } from 'ws';
 
 export type RpcMethod =
   | 'session.open'
@@ -41,7 +41,10 @@ class KeyedLock {
     const gate = new Promise<void>((r) => {
       release = r;
     });
-    this.chains.set(key, prev.then(() => gate));
+    this.chains.set(
+      key,
+      prev.then(() => gate),
+    );
     await prev;
     try {
       return await fn();
@@ -184,7 +187,11 @@ export class AgentRpcServer {
           return;
         }
 
-        if (parsed.method === 'session.subscribe' && parsed.params && typeof parsed.params === 'object') {
+        if (
+          parsed.method === 'session.subscribe' &&
+          parsed.params &&
+          typeof parsed.params === 'object'
+        ) {
           const { sessionId, afterSeq = 0 } = parsed.params as {
             sessionId: string;
             afterSeq?: number;

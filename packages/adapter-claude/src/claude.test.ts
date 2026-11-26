@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { afterEach, describe, expect, it } from 'vitest';
 import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
 import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { afterEach, describe, expect, it } from 'vitest';
 import {
   createClaudeDriver,
   mergeClaudeTokenUsage,
@@ -62,7 +62,11 @@ runProviderConformanceSuite('ClaudeAdapter (fake stream-json subprocess)', async
 
 describe('@neopolitan/adapter-claude helpers', () => {
   it('scrubs rejected ~/.claude.json API keys, leaks, and splices script prefixArgs at index 1', () => {
-    const spliced = splicePrefixArgsForScript('/tmp/cli.mjs', ['script.mjs', '-p', 'hi'], ['--flag']);
+    const spliced = splicePrefixArgsForScript(
+      '/tmp/cli.mjs',
+      ['script.mjs', '-p', 'hi'],
+      ['--flag'],
+    );
     expect(spliced).toEqual(['script.mjs', '--flag', '-p', 'hi']);
 
     const scrubbed = scrubClaudeAuthEnv(

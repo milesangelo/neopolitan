@@ -1,0 +1,34 @@
+# Neopolitan
+
+> Provider-agnostic, headless TypeScript SDK and zero-dependency CLI for driving coding-agent harnesses (Claude Code, OpenAI Codex, ACP v1/v2 agents, and interactive CLIs) across local, WSL2, Git worktree, and RPC environments.
+
+## Core Design
+- Pure `Promise`, `AsyncIterable`, `AbortSignal`, and Zod contracts in `@neopolitan/core` (zero Electron, Effect-TS, or native binary dependencies).
+- Single unified session SPI: `ProviderDriver` -> `ProviderAdapter` -> `AgentSession`.
+- Cross-provider continuity via `JsonlEventStore`, `SessionManager.handoff()`, and automatic `redactSecrets()` scrubbing.
+- Fail-closed `GateMiddleware` that never auto-approves disguised elicitations even in `full_access` mode.
+
+## Packages
+- `neopolitan` (umbrella package + subpaths `neopolitan/acp`, `neopolitan/claude`, `neopolitan/codex`, `neopolitan/pty`, `neopolitan/auth`, `neopolitan/sessions`, `neopolitan/workspace`, `neopolitan/server`, `neopolitan/orchestration` + CLI `neopolitan doctor|run|serve|handoff`)
+- `@neopolitan/core`: Core driver SPI, `AgentEvent` union, `ProviderCapabilities`, `EventHub`, `GateMiddleware`, `redactSecrets`
+- `@neopolitan/runtime-local`: `LocalExecutionRuntime`, `WslExecutionRuntime`, `killProcessTree`
+- `@neopolitan/adapter-acp`: ACP v1/v2 adapter over `@agentclientprotocol/sdk/unstable` with flavor presets
+- `@neopolitan/adapter-claude`: Claude Code `stream-json` adapter with env scrubbing & token merge
+- `@neopolitan/adapter-codex`: Codex `app-server` JSON-RPC client with surrogate sanitization & hang detection
+- `@neopolitan/adapter-pty`: Optional `node-pty` runner with `AgentHookServer` & `OSC 7501` status parsing
+- `@neopolitan/auth`: `InMemorySecretStore`, `EncryptedHostFileSecretStore`, `AuthProfile`, `resolveProviderEnv`
+- `@neopolitan/sessions`: `InMemoryEventStore`, `JsonlEventStore`, `TurnItemAccumulator`, `SessionManager`, `compileHandoffBundle`
+- `@neopolitan/workspace`: `GitWorkspaceManager`, `classifyWorktreeTier`, `AGENTS.md`/`CLAUDE.md` discovery
+- `@neopolitan/server`: `AgentRpcServer` & `AgentRpcClient` (HTTP+SSE & WebSocket with `afterSeq` cursor replay)
+- `@neopolitan/orchestration`: `FallbackPolicyEngine`, `A2ABroker`, `Orchestrator`, `runPeerReviewLoop`
+- `@neopolitan/testing`: `MockExecutionRuntime`, `createMockDriver`, and `@neopolitan/testing/conformance` (`runProviderConformanceSuite`)
+
+## Documentation Links
+- Getting Started: https://milesangelo.github.io/neopolitan/guide/getting-started
+- Architecture & DAG: https://milesangelo.github.io/neopolitan/guide/architecture
+- Provider Compatibility Matrix: https://milesangelo.github.io/neopolitan/guide/provider-matrix
+- Custom Adapter Authoring & Conformance: https://milesangelo.github.io/neopolitan/guide/custom-adapter
+- Session Persistence & Cross-Provider Handoff: https://milesangelo.github.io/neopolitan/guide/handoff-and-sessions
+- Security & Approval Gating: https://milesangelo.github.io/neopolitan/guide/security-and-gating
+- Headless RPC Server: https://milesangelo.github.io/neopolitan/guide/headless-server
+- API Reference: https://milesangelo.github.io/neopolitan/api/

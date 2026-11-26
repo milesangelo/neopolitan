@@ -74,4 +74,37 @@ describe('@neopolitan/runtime-local', () => {
     expect(wsl.id).toBe('wsl:Ubuntu-24.04');
     expect(wsl.mapHostPathToRuntime('D:\\proj\\app')).toBe('/mnt/d/proj/app');
   });
+
+  it('handles filesystem helpers, which(), pre-aborted AbortSignal, and timeoutMs cleanup', async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'agent-sdk-rt2-'));
+    tempDirs.push(dir);
+    const runtime = new LocalExecutionRuntime({ defaultCwd: dir });
+
+    await runtime.mkdir(path.join(dir, 'sub'), { recursive: true });
+    await runtime.writeFile(path.join(dir, 'sub', 'a.txt'), 'alpha');
+    const entries = await runtime.readdir(path.join(dir, 'sub'));
+    expect(entries).toEqual([{ name: 'a.txt', isDirectory: false }]);
+    const st = await runtime.stat(path.join(dir, 'sub', 'a.txt'));
+    expect(st?.isFile).toBe(true);
+    expect(await runtime.stat(path.join(dir, 'missing.txt'))).toBeNull();
+    expect(await runtime.realpath(dir)).toBeTruthy();
+
+    expect(await runtime.which(process.execPath)).toBe(process.execPath);
+    expect(await runtime.which('nonexistent-binary-neopolitan-xyz')).toBeNull();
+
+    const preAborted = new AbortController();
+    preAborted.abort();
+    await expect(
+      runtime.spawn({ command: process.execPath, args: ['-v'], cwd: dir }, preAborted.signal),
+    ).rejects.toThrow(/Aborted before spawn/);
+
+    const timed = await runtime.spawn({
+      command: process.execPath,
+      args: ['-e', 'setTimeout(() => {}, 10000)'],
+      cwd: dir,
+      timeoutMs: 60,
+    });
+    const exit = await timed.exited;
+    expect(exit.code === null || typeof exit.code === 'number').toBe(true);
+  });
 });

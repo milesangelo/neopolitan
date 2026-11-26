@@ -1,4 +1,3 @@
-import WebSocket from 'ws';
 import type {
   AgentEvent,
   DispatchReceipt,
@@ -9,6 +8,7 @@ import type {
   SendTurnInput,
   SessionAnchor,
 } from '@neopolitan/core';
+import WebSocket from 'ws';
 import type { RpcMethod, RpcResponseEnvelope } from './rpc-server.js';
 
 export interface AgentRpcClientOptions {
@@ -86,7 +86,10 @@ export class AgentRpcClient {
     }
   }
 
-  async call<T = unknown>(method: RpcMethod | 'session.subscribe', params: Record<string, unknown>): Promise<T> {
+  async call<T = unknown>(
+    method: RpcMethod | 'session.subscribe',
+    params: Record<string, unknown>,
+  ): Promise<T> {
     const id = this.nextId++;
 
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {

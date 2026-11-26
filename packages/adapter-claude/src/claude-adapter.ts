@@ -1,13 +1,10 @@
 import { randomUUID } from 'node:crypto';
-import { z } from 'zod';
 import {
-  EventHub,
-  classifyProviderFailure,
-  createLfNdjsonFramer,
   type AdapterDependencies,
   type AgentEvent,
   type AgentSession,
   type DispatchReceipt,
+  EventHub,
   type OpenSessionInput,
   type ProviderAdapter,
   type ProviderCapabilities,
@@ -15,12 +12,15 @@ import {
   type SendTurnInput,
   type SessionAnchor,
   type TokenUsage,
+  classifyProviderFailure,
+  createLfNdjsonFramer,
 } from '@neopolitan/core';
+import { z } from 'zod';
 import {
+  type ClaudeJsonConfig,
   scrubClaudeAuthEnv,
   splicePrefixArgsForScript,
   withoutRejectedClaudeApiKey,
-  type ClaudeJsonConfig,
 } from './env-sanitizer.js';
 
 export interface ClaudeDriverConfig {
@@ -169,7 +169,10 @@ class ClaudeSession implements AgentSession {
   ) {
     this.sessionId = openInput.sessionId ?? randomUUID();
     this.hub = new EventHub({ sessionId: this.sessionId });
-    if (openInput.resumeAnchor?.providerId === 'claude-code' && 'sessionId' in openInput.resumeAnchor) {
+    if (
+      openInput.resumeAnchor?.providerId === 'claude-code' &&
+      'sessionId' in openInput.resumeAnchor
+    ) {
       this.expectedResumeId = openInput.resumeAnchor.sessionId;
       this.providerSessionId = openInput.resumeAnchor.sessionId;
     }
@@ -200,13 +203,7 @@ class ClaudeSession implements AgentSession {
     signal?.addEventListener('abort', () => ac.abort(), { once: true });
 
     const executable = this.config.executablePath ?? 'claude';
-    const rawArgs: string[] = [
-      '-p',
-      input.prompt,
-      '--output-format',
-      'stream-json',
-      '--verbose',
-    ];
+    const rawArgs: string[] = ['-p', input.prompt, '--output-format', 'stream-json', '--verbose'];
     if (this.providerSessionId) {
       rawArgs.push('--resume', this.providerSessionId);
     }
@@ -268,11 +265,7 @@ class ClaudeSession implements AgentSession {
         const msg = value as Record<string, unknown>;
 
         // Ignore foreign boot session_id frames emitted before system/init on older CLIs
-        if (
-          msg.type === 'system' &&
-          msg.subtype === 'init' &&
-          typeof msg.session_id === 'string'
-        ) {
+        if (msg.type === 'system' && msg.subtype === 'init' && typeof msg.session_id === 'string') {
           this.providerSessionId = msg.session_id;
           this.expectedResumeId = undefined;
           return;

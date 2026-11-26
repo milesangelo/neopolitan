@@ -42,10 +42,7 @@ export interface AgentSession<TProviderOptions = Record<string, unknown>> extend
     readonly signal?: AbortSignal;
   }): AsyncIterable<AgentEvent>;
 
-  sendTurn(
-    input: SendTurnInput<TProviderOptions>,
-    signal?: AbortSignal,
-  ): Promise<DispatchReceipt>;
+  sendTurn(input: SendTurnInput<TProviderOptions>, signal?: AbortSignal): Promise<DispatchReceipt>;
 
   steerTurn?(
     input: SteerTurnInput<TProviderOptions>,

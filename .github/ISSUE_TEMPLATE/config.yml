@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation & Guides
+    url: https://milesangelo.github.io/neopolitan/
+    about: Browse architecture guides, provider matrix, and API reference.
+  - name: Report a Security Vulnerability
+    url: https://github.com/milesangelo/neopolitan/security/advisories/new
+    about: Please report security issues privately via GitHub Security Advisories.

@@ -12,7 +12,7 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -b"
   },
@@ -20,5 +20,24 @@
     "@neopolitan/core": "workspace:*",
     "@agentclientprotocol/sdk": "^2.12.0",
     "zod": "^3.25.76"
-  }
+  },
+  "description": "Hardened ACP v1/v2 adapter over @agentclientprotocol/sdk with dialect flavors (OpenCode, Antigravity, Grok, Kiro, Copilot) and fail-closed path policy.",
+  "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "adapter-acp"],
+  "homepage": "https://milesangelo.github.io/neopolitan/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesangelo/neopolitan.git",
+    "directory": "packages/adapter-acp"
+  },
+  "bugs": {
+    "url": "https://github.com/milesangelo/neopolitan/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false
 }

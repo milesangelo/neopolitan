@@ -12,11 +12,30 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -b"
   },
   "dependencies": {
     "@neopolitan/core": "workspace:*"
-  }
+  },
+  "description": "Local child-process and WSL2 ExecutionRuntime implementations with process-tree cleanup and bounded stderr tails.",
+  "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "runtime-local"],
+  "homepage": "https://milesangelo.github.io/neopolitan/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesangelo/neopolitan.git",
+    "directory": "packages/runtime-local"
+  },
+  "bugs": {
+    "url": "https://github.com/milesangelo/neopolitan/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false
 }

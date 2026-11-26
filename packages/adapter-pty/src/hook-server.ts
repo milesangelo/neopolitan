@@ -1,5 +1,5 @@
-import http from 'node:http';
 import { randomUUID } from 'node:crypto';
+import http from 'node:http';
 import type { AgentWireState, Osc7501Status } from './osc7501.js';
 
 export const HOOK_SILENCE_BEFORE_PROGRAM_STATUS_FALLBACK_MS = 120_000;
@@ -183,8 +183,7 @@ export class AgentHookServer {
     }
 
     const holdHeader = req.headers['x-hook-decision'];
-    const holdForPermission =
-      Boolean(holdHeader) || eventName === 'PermissionRequest';
+    const holdForPermission = Boolean(holdHeader) || eventName === 'PermissionRequest';
 
     const event: AgentHookEvent = {
       sessionId,

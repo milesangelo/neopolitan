@@ -1,14 +1,10 @@
 import { randomUUID } from 'node:crypto';
-import { z } from 'zod';
 import {
-  EventHub,
-  classifyProviderFailure,
-  createPolicyGateMiddleware,
-  formatReviewTargetPrompt,
   type AdapterDependencies,
   type AgentEvent,
   type AgentSession,
   type DispatchReceipt,
+  EventHub,
   type ForkSessionInput,
   type GateRequest,
   type GateResolution,
@@ -21,7 +17,11 @@ import {
   type SendTurnInput,
   type SessionAnchor,
   type SteerTurnInput,
+  classifyProviderFailure,
+  createPolicyGateMiddleware,
+  formatReviewTargetPrompt,
 } from '@neopolitan/core';
+import { z } from 'zod';
 import { CodexAppServerClient } from './codex-client.js';
 import { sanitizeLoneSurrogates } from './sanitize.js';
 
@@ -98,7 +98,11 @@ export function createCodexDriver(
       const cmd = defaultConfig.executablePath ?? 'codex';
       const resolved = await runtime.which(cmd, ctx.env);
       if (!resolved) {
-        return { available: false, reason: `Codex executable "${cmd}" not found`, authStatus: 'unavailable' };
+        return {
+          available: false,
+          reason: `Codex executable "${cmd}" not found`,
+          authStatus: 'unavailable',
+        };
       }
       return { available: true, executablePath: resolved, authStatus: 'unknown' };
     },
@@ -134,10 +138,7 @@ class CodexSession implements AgentSession {
   private threadId?: string;
   private activeTurnId?: string;
   private activeProviderTurnId?: string;
-  private readonly pendingGates = new Map<
-    string,
-    { resolve: (res: GateResolution) => void }
-  >();
+  private readonly pendingGates = new Map<string, { resolve: (res: GateResolution) => void }>();
   private readonly gateMiddleware;
   private closed = false;
 
@@ -181,7 +182,10 @@ class CodexSession implements AgentSession {
 
     await this.client.start(signal);
 
-    if (this.openInput.resumeAnchor?.providerId === 'codex' && 'threadId' in this.openInput.resumeAnchor) {
+    if (
+      this.openInput.resumeAnchor?.providerId === 'codex' &&
+      'threadId' in this.openInput.resumeAnchor
+    ) {
       const res = await this.client.request<{ thread: { id: string } }>('thread/resume', {
         threadId: this.openInput.resumeAnchor.threadId,
         cwd: this.openInput.cwd,
@@ -385,7 +389,11 @@ class CodexSession implements AgentSession {
         threadDisposition: 'reusable',
         failure:
           status === 'failed'
-            ? classifyProviderFailure(String((turn.error as { message?: string } | undefined)?.message ?? 'Codex turn failed'))
+            ? classifyProviderFailure(
+                String(
+                  (turn.error as { message?: string } | undefined)?.message ?? 'Codex turn failed',
+                ),
+              )
             : undefined,
         rawEvent: { protocol: 'codex-app-server', payload: { method, params } },
       });

@@ -3,12 +3,13 @@ import os from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
+  type AuthProfile,
   EncryptedHostFileSecretStore,
+  InMemorySecretStore,
   computeClaudeKeychainServiceName,
   resolveInheritedProfile,
   resolveProviderEnv,
   shouldBlockSendForAuthStatus,
-  type AuthProfile,
 } from './index.js';
 
 const tempDirs: string[] = [];
@@ -74,5 +75,38 @@ describe('@neopolitan/auth', () => {
       orgId: 'org-1',
     });
     expect(matched?.profileId).toBe('p1');
+  });
+
+  it('supports InMemorySecretStore plus OAuth, Vertex, and Codex profile env mapping', async () => {
+    const mem = new InMemorySecretStore();
+    const sealed = await mem.seal('oauth-tok');
+    expect(await mem.unseal(sealed)).toBe('oauth-tok');
+
+    const codexEnv = await resolveProviderEnv(
+      {
+        profileId: 'cx',
+        providerId: 'codex',
+        authKind: 'api_key',
+        runtimeScope: 'host',
+        homeOrConfigDir: '/tmp/codex-home',
+        sealedSecret: await mem.seal('sk-proj-test123'),
+        baseUrl: 'https://api.example.com/v1',
+      },
+      mem,
+    );
+    expect(codexEnv.CODEX_HOME).toBe('/tmp/codex-home');
+    expect(codexEnv.OPENAI_API_KEY).toBe('sk-proj-test123');
+    expect(codexEnv.OPENAI_BASE_URL).toBe('https://api.example.com/v1');
+
+    const vertexEnv = await resolveProviderEnv(
+      {
+        profileId: 'vx',
+        providerId: 'claude-code',
+        authKind: 'vertex',
+        runtimeScope: 'host',
+      },
+      mem,
+    );
+    expect(vertexEnv.CLAUDE_CODE_USE_VERTEX).toBe('1');
   });
 });

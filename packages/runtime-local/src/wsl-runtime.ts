@@ -122,19 +122,25 @@ export class WslExecutionRuntime implements ExecutionRuntime {
   }
 
   async realpath(targetPath: string): Promise<string> {
-    const res = await this.runHelper(`realpath ${shellEscape(this.mapHostPathToRuntime(targetPath))}`);
+    const res = await this.runHelper(
+      `realpath ${shellEscape(this.mapHostPathToRuntime(targetPath))}`,
+    );
     if (res.code !== 0) throw new Error(`realpath failed for ${targetPath}`);
     return res.stdout;
   }
 
   async exists(targetPath: string): Promise<boolean> {
-    const res = await this.runHelper(`test -e ${shellEscape(this.mapHostPathToRuntime(targetPath))}`);
+    const res = await this.runHelper(
+      `test -e ${shellEscape(this.mapHostPathToRuntime(targetPath))}`,
+    );
     return res.code === 0;
   }
 
   async mkdir(targetPath: string, options?: { readonly recursive?: boolean }): Promise<void> {
     const flag = options?.recursive === false ? '' : '-p ';
-    const res = await this.runHelper(`mkdir ${flag}${shellEscape(this.mapHostPathToRuntime(targetPath))}`);
+    const res = await this.runHelper(
+      `mkdir ${flag}${shellEscape(this.mapHostPathToRuntime(targetPath))}`,
+    );
     if (res.code !== 0) throw new Error(`mkdir failed for ${targetPath}`);
   }
 

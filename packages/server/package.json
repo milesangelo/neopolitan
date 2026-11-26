@@ -12,7 +12,7 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -b"
   },
@@ -23,5 +23,24 @@
   },
   "devDependencies": {
     "@types/ws": "^8.18.1"
-  }
+  },
+  "description": "Headless HTTP+SSE and WebSocket RPC server and client with per-session KeyedLock and cursor replay.",
+  "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "server"],
+  "homepage": "https://milesangelo.github.io/neopolitan/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesangelo/neopolitan.git",
+    "directory": "packages/server"
+  },
+  "bugs": {
+    "url": "https://github.com/milesangelo/neopolitan/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false
 }

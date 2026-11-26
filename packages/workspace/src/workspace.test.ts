@@ -92,4 +92,67 @@ describe('@neopolitan/workspace', () => {
 
     await mgr.cleanupWorktree(handle, { force: true });
   });
+
+  it('classifies orphaned, merged, at-base-commit, unreferenced, detached, and unreadable tiers', () => {
+    expect(
+      classifyWorktreeTier({
+        isInUse: false,
+        isDirty: false,
+        isDetached: true,
+        gitUnreadable: false,
+        hasUnmergedCommits: false,
+        isOrphaned: false,
+        isMergedIntoDefault: false,
+        isAtBaseCommit: true,
+      }),
+    ).toBe('review');
+    expect(
+      classifyWorktreeTier({
+        isInUse: false,
+        isDirty: false,
+        isDetached: false,
+        gitUnreadable: false,
+        hasUnmergedCommits: false,
+        isOrphaned: true,
+        isMergedIntoDefault: false,
+        isAtBaseCommit: false,
+      }),
+    ).toBe('orphaned');
+    expect(
+      classifyWorktreeTier({
+        isInUse: false,
+        isDirty: false,
+        isDetached: false,
+        gitUnreadable: false,
+        hasUnmergedCommits: false,
+        isOrphaned: false,
+        isMergedIntoDefault: true,
+        isAtBaseCommit: false,
+      }),
+    ).toBe('merged');
+    expect(
+      classifyWorktreeTier({
+        isInUse: false,
+        isDirty: false,
+        isDetached: false,
+        gitUnreadable: false,
+        hasUnmergedCommits: false,
+        isOrphaned: false,
+        isMergedIntoDefault: false,
+        isAtBaseCommit: true,
+      }),
+    ).toBe('at-base-commit');
+    expect(
+      classifyWorktreeTier({
+        isInUse: false,
+        isDirty: false,
+        isDetached: false,
+        gitUnreadable: false,
+        hasUnmergedCommits: false,
+        isOrphaned: false,
+        isMergedIntoDefault: false,
+        isAtBaseCommit: false,
+      }),
+    ).toBe('unreferenced');
+  });
 });

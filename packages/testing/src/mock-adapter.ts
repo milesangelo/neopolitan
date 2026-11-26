@@ -1,13 +1,10 @@
 import { randomUUID } from 'node:crypto';
-import { z } from 'zod';
 import {
-  EventHub,
-  classifyProviderFailure,
-  createPolicyGateMiddleware,
   type AdapterDependencies,
   type AgentEvent,
   type AgentSession,
   type DispatchReceipt,
+  EventHub,
   type ExecutionRuntime,
   type GateRequest,
   type GateResolution,
@@ -20,7 +17,10 @@ import {
   type SendTurnInput,
   type SessionAnchor,
   type SpawnSpec,
+  classifyProviderFailure,
+  createPolicyGateMiddleware,
 } from '@neopolitan/core';
+import { z } from 'zod';
 
 export class MockExecutionRuntime implements ExecutionRuntime {
   readonly id = 'mock';
@@ -315,7 +315,12 @@ class MockAgentSession implements AgentSession {
       const blockId = `msg-${turnId}`;
       this.hub.emit({ type: 'assistant.delta', turnId, blockId, text: 'Mock reply: ' });
       this.hub.emit({ type: 'assistant.delta', turnId, blockId, text: prompt });
-      this.hub.emit({ type: 'assistant.completed', turnId, blockId, text: `Mock reply: ${prompt}` });
+      this.hub.emit({
+        type: 'assistant.completed',
+        turnId,
+        blockId,
+        text: `Mock reply: ${prompt}`,
+      });
       this.hub.emit({
         type: 'turn.completed',
         turnId,

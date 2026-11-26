@@ -1,11 +1,10 @@
 import { randomUUID } from 'node:crypto';
-import { z } from 'zod';
 import {
-  EventHub,
   type AdapterDependencies,
   type AgentEvent,
   type AgentSession,
   type DispatchReceipt,
+  EventHub,
   type ManagedPty,
   type OpenSessionInput,
   type ProviderAdapter,
@@ -15,13 +14,14 @@ import {
   type SendTurnInput,
   type SessionAnchor,
 } from '@neopolitan/core';
-import { parseOsc7501Sequences, type Osc7501Status } from './osc7501.js';
+import { z } from 'zod';
 import {
-  reduceHookAndOscStatus,
-  reduceHostTurnEnd,
   type HookStatusUpdate,
   type HostTurnRecord,
+  reduceHookAndOscStatus,
+  reduceHostTurnEnd,
 } from './hook-server.js';
+import { type Osc7501Status, parseOsc7501Sequences } from './osc7501.js';
 
 export interface PtyBackend {
   spawnPty(spec: PtySpawnSpec): Promise<ManagedPty>;
@@ -95,7 +95,13 @@ export async function loadNodePtyBackend(): Promise<PtyBackend> {
     spawn(
       file: string,
       args: string[],
-      options: { name?: string; cols?: number; rows?: number; cwd?: string; env?: Record<string, string> },
+      options: {
+        name?: string;
+        cols?: number;
+        rows?: number;
+        cwd?: string;
+        env?: Record<string, string>;
+      },
     ): {
       pid: number;
       write(data: string): void;
@@ -115,9 +121,11 @@ export async function loadNodePtyBackend(): Promise<PtyBackend> {
         cwd: spec.cwd,
         env: { ...(process.env as Record<string, string>), ...(spec.env ?? {}) },
       });
-      const exited = new Promise<{ code: number | null; signal: NodeJS.Signals | null }>((resolve) => {
-        pty.onExit(({ exitCode }) => resolve({ code: exitCode, signal: null }));
-      });
+      const exited = new Promise<{ code: number | null; signal: NodeJS.Signals | null }>(
+        (resolve) => {
+          pty.onExit(({ exitCode }) => resolve({ code: exitCode, signal: null }));
+        },
+      );
       return {
         pid: pty.pid,
         write: (d) => pty.write(d),
@@ -170,7 +178,9 @@ export class PtyAdapter implements ProviderAdapter {
   async openSession(input: OpenSessionInput): Promise<AgentSession> {
     const backend =
       this.config.ptyBackend ??
-      (this.deps.runtime.spawnPty ? { spawnPty: this.deps.runtime.spawnPty.bind(this.deps.runtime) } : await loadNodePtyBackend());
+      (this.deps.runtime.spawnPty
+        ? { spawnPty: this.deps.runtime.spawnPty.bind(this.deps.runtime) }
+        : await loadNodePtyBackend());
     const session = new PtySession(this.config, input, backend);
     await session.start();
     return session;

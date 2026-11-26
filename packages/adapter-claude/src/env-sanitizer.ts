@@ -35,13 +35,15 @@ export function splicePrefixArgsForScript(
  */
 export function scrubClaudeAuthEnv(
   env: Readonly<Record<string, string | undefined>>,
-  options?: { readonly stripAuthEnv?: boolean; readonly configDir?: string; readonly platform?: string },
+  options?: {
+    readonly stripAuthEnv?: boolean;
+    readonly configDir?: string;
+    readonly platform?: string;
+  },
 ): Record<string, string> {
   const result: Record<string, string> = {};
   const isWin = (options?.platform ?? process.platform) === 'win32';
-  const authSet = new Set(
-    CLAUDE_AUTH_ENV_VARS.map((k) => (isWin ? k.toLowerCase() : k)),
-  );
+  const authSet = new Set(CLAUDE_AUTH_ENV_VARS.map((k) => (isWin ? k.toLowerCase() : k)));
 
   for (const [k, v] of Object.entries(env)) {
     if (v === undefined) continue;

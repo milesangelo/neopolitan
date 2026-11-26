@@ -1,15 +1,15 @@
-import { afterEach, describe, expect, it } from 'vitest';
 import type { ManagedPty, ProcessExitResult } from '@neopolitan/core';
 import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
 import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { afterEach, describe, expect, it } from 'vitest';
 import {
   AgentHookServer,
   HOOK_SILENCE_BEFORE_PROGRAM_STATUS_FALLBACK_MS,
+  type PtyBackend,
   createPtyDriver,
   parseOsc7501Sequences,
   reduceHookAndOscStatus,
   reduceHostTurnEnd,
-  type PtyBackend,
 } from './index.js';
 
 function createFakePtyBackend(): PtyBackend {
@@ -60,7 +60,10 @@ runProviderConformanceSuite('PtyAdapter (fake PtyBackend)', async () => {
     command: 'fake-cli',
     ptyBackend: createFakePtyBackend(),
   });
-  const adapter = await driver.createAdapter({ command: 'fake-cli', ptyBackend: createFakePtyBackend() }, { runtime });
+  const adapter = await driver.createAdapter(
+    { command: 'fake-cli', ptyBackend: createFakePtyBackend() },
+    { runtime },
+  );
   return {
     openSession: (input) => adapter.openSession({ cwd: runtime.defaultCwd, ...input }),
   };
@@ -68,7 +71,10 @@ runProviderConformanceSuite('PtyAdapter (fake PtyBackend)', async () => {
 
 describe('@neopolitan/adapter-pty hooks & OSC 7501', () => {
   it('enforces hook-vs-OSC precedence, boundary suppression, and turn-end disposition', () => {
-    const parsed = parseOsc7501Sequences('abc\x1b]7501;working\x07def\x1b]7501;state=done\x1b\\', 1_000);
+    const parsed = parseOsc7501Sequences(
+      'abc\x1b]7501;working\x07def\x1b]7501;state=done\x1b\\',
+      1_000,
+    );
     expect(parsed).toEqual([
       { state: 'working', timestamp: 1_000 },
       { state: 'done', timestamp: 1_000 },
@@ -87,7 +93,10 @@ describe('@neopolitan/adapter-pty hooks & OSC 7501', () => {
     expect(
       reduceHookAndOscStatus({
         lastHook: { state: 'working', timestamp: t0 },
-        lastOsc: { state: 'done', timestamp: t0 + HOOK_SILENCE_BEFORE_PROGRAM_STATUS_FALLBACK_MS + 1 },
+        lastOsc: {
+          state: 'done',
+          timestamp: t0 + HOOK_SILENCE_BEFORE_PROGRAM_STATUS_FALLBACK_MS + 1,
+        },
         now: t0 + HOOK_SILENCE_BEFORE_PROGRAM_STATUS_FALLBACK_MS + 1,
       }).state,
     ).toBe('done');
@@ -99,7 +108,10 @@ describe('@neopolitan/adapter-pty hooks & OSC 7501', () => {
       }).state,
     ).toBe('done');
 
-    const s1 = reduceHostTurnEnd({ currentTurnKey: 'seed' }, { kind: 'prompt_submit', turnKey: 't1', at: 1 });
+    const s1 = reduceHostTurnEnd(
+      { currentTurnKey: 'seed' },
+      { kind: 'prompt_submit', turnKey: 't1', at: 1 },
+    );
     const s2 = reduceHostTurnEnd(s1.next, { kind: 'stop', at: 2 });
     expect(s2.disposition).toBe('identified');
     const s3 = reduceHostTurnEnd(s2.next, { kind: 'stop', at: 3 });
@@ -131,7 +143,9 @@ describe('@neopolitan/adapter-pty hooks & OSC 7501', () => {
         tool_name: 'Bash',
       }),
     });
-    const json = (await res.json()) as { hookSpecificOutput?: { decision?: { behavior?: string } } };
+    const json = (await res.json()) as {
+      hookSpecificOutput?: { decision?: { behavior?: string } };
+    };
     expect(json.hookSpecificOutput?.decision?.behavior).toBe('allow');
   });
 });

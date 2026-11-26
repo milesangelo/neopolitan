@@ -1,25 +1,29 @@
+import { randomUUID } from 'node:crypto';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { randomUUID } from 'node:crypto';
-import { z } from 'zod';
 import {
-  EventHub,
-  ProviderRegistry,
-  type AgentEvent,
-  type AgentSession,
-  type ProviderDriver,
-  type SendTurnInput,
-} from '@neopolitan/core';
-import {
+  type AuthProfile,
   EncryptedHostFileSecretStore,
   resolveProviderEnv,
   shouldBlockSendForAuthStatus,
-  type AuthProfile,
 } from '@neopolitan/auth';
-import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
+import {
+  type AgentEvent,
+  type AgentSession,
+  EventHub,
+  type ProviderDriver,
+  ProviderRegistry,
+  type SendTurnInput,
+} from '@neopolitan/core';
 import { FallbackPolicyEngine, Orchestrator } from '@neopolitan/orchestration';
-import { createMockDriver, MOCK_BASE_CAPABILITIES, MockExecutionRuntime } from '@neopolitan/testing';
+import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
+import {
+  MOCK_BASE_CAPABILITIES,
+  MockExecutionRuntime,
+  createMockDriver,
+} from '@neopolitan/testing';
+import { z } from 'zod';
 
 /**
  * Reviewer driver that requests revisions on round 1 and approves on round 2.
@@ -103,7 +107,12 @@ async function main(): Promise<void> {
       noProxy: 'localhost,127.0.0.1',
     };
     const env = await resolveProviderEnv(profile, secretStore);
-    console.log('[1] Auth blocks on unknown?', shouldBlockSendForAuthStatus('unknown'), 'env keys:', Object.keys(env));
+    console.log(
+      '[1] Auth blocks on unknown?',
+      shouldBlockSendForAuthStatus('unknown'),
+      'env keys:',
+      Object.keys(env),
+    );
 
     // 2. Automatic cross-provider fallback policy decision
     const fallback = new FallbackPolicyEngine({
@@ -138,7 +147,11 @@ async function main(): Promise<void> {
     const manager = new SessionManager(registry, store, { runtime });
     const orchestrator = new Orchestrator(manager);
 
-    const lead = await orchestrator.spawnAgent({ agentId: 'lead', providerId: 'mock', cwd: '/workspace' });
+    const lead = await orchestrator.spawnAgent({
+      agentId: 'lead',
+      providerId: 'mock',
+      cwd: '/workspace',
+    });
     const worker = await orchestrator.spawnAgent({
       agentId: 'worker',
       parentAgentId: 'lead',
@@ -146,9 +159,22 @@ async function main(): Promise<void> {
       cwd: '/workspace',
     });
 
-    const role1 = orchestrator.claimRole({ agentId: 'lead', role: 'Implementer', scope: 'packages/auth' });
-    const role2 = orchestrator.claimRole({ agentId: 'worker', role: 'implementer', scope: 'packages/auth' });
-    console.log('[3] Role claim overlaps detected:', role1.overlapping.length, '->', role2.overlapping.length);
+    const role1 = orchestrator.claimRole({
+      agentId: 'lead',
+      role: 'Implementer',
+      scope: 'packages/auth',
+    });
+    const role2 = orchestrator.claimRole({
+      agentId: 'worker',
+      role: 'implementer',
+      scope: 'packages/auth',
+    });
+    console.log(
+      '[3] Role claim overlaps detected:',
+      role1.overlapping.length,
+      '->',
+      role2.overlapping.length,
+    );
 
     const msg = await orchestrator.sendAgentMessage({
       fromAgentId: lead.agentId,

@@ -1,8 +1,8 @@
 import {
-  ThreadInUseError,
-  createLfNdjsonFramer,
   type ExecutionRuntime,
   type ManagedProcess,
+  ThreadInUseError,
+  createLfNdjsonFramer,
 } from '@neopolitan/core';
 
 export const DEFAULT_CODEX_REQUEST_TIMEOUT_MS = 30_000;
@@ -17,7 +17,11 @@ export interface CodexRpcConnectionOptions {
   readonly requestTimeoutMs?: number;
   readonly hangTimeoutMs?: number;
   readonly onNotification?: (method: string, params: unknown) => void;
-  readonly onServerRequest?: (id: number | string, method: string, params: unknown) => Promise<unknown>;
+  readonly onServerRequest?: (
+    id: number | string,
+    method: string,
+    params: unknown,
+  ) => Promise<unknown>;
   readonly onHangRetired?: () => void;
 }
 
@@ -36,7 +40,11 @@ export class CodexAppServerClient {
   private closed = false;
   private readonly pending = new Map<
     number | string,
-    { resolve: (v: unknown) => void; reject: (err: unknown) => void; timer?: ReturnType<typeof setTimeout> }
+    {
+      resolve: (v: unknown) => void;
+      reject: (err: unknown) => void;
+      timer?: ReturnType<typeof setTimeout>;
+    }
   >();
   private readonly pendingServerRequests = new Set<number | string>();
 

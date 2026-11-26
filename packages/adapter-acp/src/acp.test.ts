@@ -2,9 +2,9 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import * as acp from '@agentclientprotocol/sdk/unstable';
-import { afterEach, describe, expect, it } from 'vitest';
 import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
 import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { afterEach, describe, expect, it } from 'vitest';
 import {
   ACP_INT32_ID_FLOOR,
   antigravityFlavor,
@@ -26,9 +26,7 @@ function createFakeAcpAgentApp(): acp.AgentApp {
     }))
     .onRequest(acp.methods.agent.session.load, () => ({}))
     .onRequest(acp.methods.agent.session.prompt, async (ctx) => {
-      const promptText = ctx.params.prompt
-        .map((p) => (p.type === 'text' ? p.text : ''))
-        .join('');
+      const promptText = ctx.params.prompt.map((p) => (p.type === 'text' ? p.text : '')).join('');
 
       if (/secret/i.test(promptText)) {
         throw acp.RequestError.authRequired({
@@ -139,7 +137,9 @@ describe('@neopolitan/adapter-acp hardening', () => {
     const runtime = new LocalExecutionRuntime({ defaultCwd: dir });
 
     await expect(assertPathWithinWorkspace(runtime, dir, '/etc/passwd')).rejects.toThrow(/escapes/);
-    await expect(assertPathWithinWorkspace(runtime, dir, '~/.ssh/id_rsa')).rejects.toThrow(/disallowed/);
+    await expect(assertPathWithinWorkspace(runtime, dir, '~/.ssh/id_rsa')).rejects.toThrow(
+      /disallowed/,
+    );
     const okPath = await assertPathWithinWorkspace(runtime, dir, 'nested/file.ts');
     expect(okPath.startsWith(await runtime.realpath(dir))).toBe(true);
 

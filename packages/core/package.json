@@ -12,11 +12,30 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -b"
   },
   "dependencies": {
     "zod": "^3.25.76"
-  }
+  },
+  "description": "Core driver SPI, canonical AgentEvent schemas, capability manifests, GateMiddleware, failure sanitization, and ExecutionRuntime interfaces for Neopolitan.",
+  "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "core"],
+  "homepage": "https://milesangelo.github.io/neopolitan/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesangelo/neopolitan.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/milesangelo/neopolitan/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false
 }

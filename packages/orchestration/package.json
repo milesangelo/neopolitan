@@ -12,12 +12,31 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -b"
   },
   "dependencies": {
     "@neopolitan/core": "workspace:*",
     "@neopolitan/sessions": "workspace:*"
-  }
+  },
+  "description": "FallbackPolicyEngine, A2ABroker messaging, role claim mediation, and peer-review loops for multi-agent workflows.",
+  "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "orchestration"],
+  "homepage": "https://milesangelo.github.io/neopolitan/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesangelo/neopolitan.git",
+    "directory": "packages/orchestration"
+  },
+  "bugs": {
+    "url": "https://github.com/milesangelo/neopolitan/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false
 }

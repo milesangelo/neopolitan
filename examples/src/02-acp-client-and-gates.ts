@@ -2,13 +2,13 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import * as acp from '@agentclientprotocol/sdk/unstable';
-import { createPolicyGateMiddleware, type AgentEvent } from '@neopolitan/core';
-import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
 import {
   antigravityFlavor,
   assertPathWithinWorkspace,
   createAcpDriver,
 } from '@neopolitan/adapter-acp';
+import { type AgentEvent, createPolicyGateMiddleware } from '@neopolitan/core';
+import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
 
 function createSimulatedAntigravityAgent(): acp.AgentApp {
   return acp
@@ -24,7 +24,12 @@ function createSimulatedAntigravityAgent(): acp.AgentApp {
       // 1. Safe file read check (policy auto-allows)
       const readPerm = await ctx.client.request(acp.methods.client.session.requestPermission, {
         sessionId: ctx.params.sessionId,
-        toolCall: { toolCallId: 'read-1', title: 'Read package.json', kind: 'read', status: 'pending' },
+        toolCall: {
+          toolCallId: 'read-1',
+          title: 'Read package.json',
+          kind: 'read',
+          status: 'pending',
+        },
         options: [
           { optionId: 'allow', kind: 'allow_once', name: 'Allow' },
           { optionId: 'reject', kind: 'reject_once', name: 'Deny' },
@@ -34,7 +39,12 @@ function createSimulatedAntigravityAgent(): acp.AgentApp {
       // 2. Destructive shell command (policy denies)
       const rmPerm = await ctx.client.request(acp.methods.client.session.requestPermission, {
         sessionId: ctx.params.sessionId,
-        toolCall: { toolCallId: 'exec-1', title: 'rm -rf /tmp/prod', kind: 'execute', status: 'pending' },
+        toolCall: {
+          toolCallId: 'exec-1',
+          title: 'rm -rf /tmp/prod',
+          kind: 'execute',
+          status: 'pending',
+        },
         options: [
           { optionId: 'allow', kind: 'allow_once', name: 'Allow' },
           { optionId: 'reject', kind: 'reject_once', name: 'Deny' },
@@ -85,7 +95,12 @@ async function main(): Promise<void> {
     const gateMiddleware = createPolicyGateMiddleware({
       rules: [
         { id: 'allow-reads', match: { category: 'file_read' }, action: 'allow' },
-        { id: 'deny-rm', match: { toolPattern: 'rm -rf*' }, action: 'deny', reason: 'Destructive rm blocked' },
+        {
+          id: 'deny-rm',
+          match: { toolPattern: 'rm -rf*' },
+          action: 'deny',
+          reason: 'Destructive rm blocked',
+        },
       ],
     });
 
@@ -135,8 +150,14 @@ async function main(): Promise<void> {
     console.log(
       '[4] Gate resolutions:',
       events
-        .filter((e): e is Extract<AgentEvent, { type: 'gate.resolved' }> => e.type === 'gate.resolved')
-        .map((e) => ({ id: e.requestId, decision: e.resolution.decision, source: e.resolution.source })),
+        .filter(
+          (e): e is Extract<AgentEvent, { type: 'gate.resolved' }> => e.type === 'gate.resolved',
+        )
+        .map((e) => ({
+          id: e.requestId,
+          decision: e.resolution.decision,
+          source: e.resolution.source,
+        })),
     );
   } finally {
     await fs.rm(workspaceDir, { recursive: true, force: true });

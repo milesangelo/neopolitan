@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
 import { ProviderRegistry } from '@neopolitan/core';
 import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
-import { createMockDriver, MockExecutionRuntime } from '@neopolitan/testing';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
+import { describe, expect, it } from 'vitest';
 import { FallbackPolicyEngine, Orchestrator } from './index.js';
 
 describe('@neopolitan/orchestration', () => {
@@ -58,7 +58,11 @@ describe('@neopolitan/orchestration', () => {
     const manager = new SessionManager(registry, store, { runtime });
     const orch = new Orchestrator(manager);
 
-    const parent = await orch.spawnAgent({ agentId: 'lead', providerId: 'mock', cwd: '/workspace' });
+    const parent = await orch.spawnAgent({
+      agentId: 'lead',
+      providerId: 'mock',
+      cwd: '/workspace',
+    });
     const child = await orch.spawnAgent({
       agentId: 'worker-1',
       parentAgentId: 'lead',
@@ -77,7 +81,11 @@ describe('@neopolitan/orchestration', () => {
 
     const c1 = orch.claimRole({ agentId: 'lead', role: 'Architect', scope: 'packages/core' });
     expect(c1.overlapping).toHaveLength(0);
-    const c2 = orch.claimRole({ agentId: 'worker-1', role: '  architect ', scope: 'packages/core' });
+    const c2 = orch.claimRole({
+      agentId: 'worker-1',
+      role: '  architect ',
+      scope: 'packages/core',
+    });
     expect(c2.overlapping).toHaveLength(1);
 
     await orch.stopAgent('lead', { cascade: true });

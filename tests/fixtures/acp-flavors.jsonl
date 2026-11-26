@@ -1,0 +1,10 @@
+{"frameType":"update","sessionUpdate":"agent_thought_chunk","content":{"type":"text","text":"Inspecting repository files..."}}
+{"frameType":"update","sessionUpdate":"plan","entries":[{"content":"Read package.json","status":"completed","priority":"high"},{"content":"Patch gate handler","status":"in_progress","priority":"medium"}]}
+{"frameType":"update","sessionUpdate":"tool_call","toolCallId":"tc-read-1","title":"read package.json","kind":"read","rawInput":{"path":"package.json"}}
+{"frameType":"update","sessionUpdate":"tool_call_update","toolCallId":"tc-read-1","status":"completed","rawOutput":{"ok":true}}
+{"frameType":"update","sessionUpdate":"tool_call","toolCallId":"tc-edit-2","title":"edit src/index.ts","kind":"edit","rawInput":{"path":"src/index.ts"}}
+{"frameType":"update","sessionUpdate":"tool_call_update","toolCallId":"tc-edit-2","status":"failed","rawOutput":{"error":"permission denied"}}
+{"frameType":"elicitation","mode":"form","message":"Enter release tag"}
+{"frameType":"elicitation","mode":"url","message":"Authorize OAuth","url":"https://auth.example.com/device"}
+{"frameType":"permission","toolCall":{"toolCallId":"interaction_choice_1","title":"Choose database driver","kind":"other","status":"pending"}}
+{"frameType":"update","sessionUpdate":"agent_message_chunk","content":{"type":"text","text":"Completed ACP v2 turn."}}

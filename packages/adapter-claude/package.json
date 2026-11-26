@@ -12,7 +12,7 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -b"
   },
@@ -27,5 +27,24 @@
     "@anthropic-ai/claude-agent-sdk": {
       "optional": true
     }
-  }
+  },
+  "description": "Claude Code adapter with stream-json parsing, rejected API key scrubbing, prefixArgs splicing, and cumulative token merging.",
+  "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "adapter-claude"],
+  "homepage": "https://milesangelo.github.io/neopolitan/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesangelo/neopolitan.git",
+    "directory": "packages/adapter-claude"
+  },
+  "bugs": {
+    "url": "https://github.com/milesangelo/neopolitan/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false
 }

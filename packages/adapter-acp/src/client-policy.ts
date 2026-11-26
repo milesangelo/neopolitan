@@ -13,7 +13,7 @@ export async function assertPathWithinWorkspace(
   candidatePath: string,
 ): Promise<string> {
   if (!candidatePath || candidatePath.includes('\0')) {
-    throw new Error(`Invalid ACP path: empty or contains NUL byte`);
+    throw new Error('Invalid ACP path: empty or contains NUL byte');
   }
   if (candidatePath.startsWith('~') || /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(candidatePath)) {
     throw new Error(`ACP path "${candidatePath}" uses disallowed tilde or URI scheme`);

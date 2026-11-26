@@ -1,0 +1,46 @@
+name: Bug Report
+description: Report a reproducible issue in neopolitan or any @neopolitan/* package
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Concise description of the bug and expected behavior.
+    validations:
+      required: true
+  - type: dropdown
+    id: package
+    attributes:
+      label: Affected Package / CLI
+      options:
+        - neopolitan (umbrella / CLI)
+        - "@neopolitan/core"
+        - "@neopolitan/runtime-local"
+        - "@neopolitan/adapter-acp"
+        - "@neopolitan/adapter-claude"
+        - "@neopolitan/adapter-codex"
+        - "@neopolitan/adapter-pty"
+        - "@neopolitan/auth"
+        - "@neopolitan/sessions"
+        - "@neopolitan/workspace"
+        - "@neopolitan/server"
+        - "@neopolitan/orchestration"
+        - "@neopolitan/testing"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment (OS, Node, Provider CLI & Version)
+      placeholder: "macOS 15, Node 22.14.0, codex 0.x"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal Reproduction
+      description: Paste a minimal snippet or sanitized NDJSON wire log (scrub any API keys/tokens).
+    validations:
+      required: true

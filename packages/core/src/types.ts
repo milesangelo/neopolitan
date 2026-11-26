@@ -239,7 +239,12 @@ export interface ProviderProbeResult {
   readonly available: boolean;
   readonly version?: string;
   readonly executablePath?: string;
-  readonly authStatus?: 'authenticated' | 'configured' | 'unauthenticated' | 'unknown' | 'unavailable';
+  readonly authStatus?:
+    | 'authenticated'
+    | 'configured'
+    | 'unauthenticated'
+    | 'unknown'
+    | 'unavailable';
   readonly reason?: string;
 }
 
@@ -251,19 +256,17 @@ export function formatReviewTargetPrompt(target: ReviewTarget): string {
   const sections: string[] = [];
   if (target.repos.length > 0) {
     sections.push(
-      'Review targets:\n' +
-        target.repos.map((r) => `- ${r.name} (base: ${r.baseCommit})`).join('\n'),
+      `Review targets:\n${target.repos.map((r) => `- ${r.name} (base: ${r.baseCommit})`).join('\n')}`,
     );
   }
   if (target.comments && target.comments.length > 0) {
     sections.push(
-      'Inline review comments:\n' +
-        target.comments
-          .map((c) => {
-            const snippet = c.codeLine ? `\n  > ${c.codeLine}` : '';
-            return `- ${c.filePath}:${c.lineNumber} (${c.side}): ${c.text}${snippet}`;
-          })
-          .join('\n'),
+      `Inline review comments:\n${target.comments
+        .map((c) => {
+          const snippet = c.codeLine ? `\n  > ${c.codeLine}` : '';
+          return `- ${c.filePath}:${c.lineNumber} (${c.side}): ${c.text}${snippet}`;
+        })
+        .join('\n')}`,
     );
   }
   if (target.instructions) {

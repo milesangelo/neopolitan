@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "references": [
+    { "path": "../core" },
+    { "path": "../runtime-local" },
+    { "path": "../adapter-acp" },
+    { "path": "../adapter-claude" },
+    { "path": "../adapter-codex" },
+    { "path": "../adapter-pty" },
+    { "path": "../auth" },
+    { "path": "../sessions" },
+    { "path": "../workspace" },
+    { "path": "../server" },
+    { "path": "../orchestration" }
+  ],
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"]
+}
