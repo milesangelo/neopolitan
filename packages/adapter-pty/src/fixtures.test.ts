@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { AgentEvent, ManagedPty, ProcessExitResult } from '@neopolitan/core';
-import { MockExecutionRuntime } from '@neopolitan/testing';
+import type { AgentEvent, ManagedPty, ProcessExitResult } from '@neopolitan-ai/core';
+import { MockExecutionRuntime } from '@neopolitan-ai/testing';
 import { describe, expect, it } from 'vitest';
 import { type PtyBackend, createPtyDriver } from './index.js';
 

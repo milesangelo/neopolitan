@@ -1,10 +1,10 @@
-import { ProviderRegistry } from '@neopolitan/core';
-import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
-import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
+import { ProviderRegistry } from '@neopolitan-ai/core';
+import { InMemoryEventStore, SessionManager } from '@neopolitan-ai/sessions';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
 import { describe, expect, it } from 'vitest';
 import { FallbackPolicyEngine, Orchestrator } from './index.js';
 
-describe('@neopolitan/orchestration', () => {
+describe('@neopolitan-ai/orchestration', () => {
   it('walks fallback policy ladder (profile -> tier -> wait -> notify)', () => {
     const engine = new FallbackPolicyEngine({
       ladder: ['profile', 'tier', 'wait', 'notify'],

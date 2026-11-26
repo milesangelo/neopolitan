@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { ThreadInUseError } from '@neopolitan/core';
-import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
-import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { ThreadInUseError } from '@neopolitan-ai/core';
+import { LocalExecutionRuntime } from '@neopolitan-ai/runtime-local';
+import { runProviderConformanceSuite } from '@neopolitan-ai/testing/conformance';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   CodexAppServerClient,
@@ -76,7 +76,7 @@ function handle(msg) {
 const tempDirs: string[] = [];
 afterEach(async () => {
   for (const dir of tempDirs.splice(0)) {
-    await fs.rm(dir, { recursive: true, force: true });
+    await fs.rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
 });
 
@@ -99,7 +99,7 @@ runProviderConformanceSuite('CodexAdapter (fake app-server subprocess)', async (
   };
 });
 
-describe('@neopolitan/adapter-codex hardening', () => {
+describe('@neopolitan-ai/adapter-codex hardening', () => {
   it('sanitizes lone UTF-16 surrogates, deduplicates rate limits, and detects hung/busy servers', async () => {
     const validEmoji = 'hi 😀';
     expect(sanitizeLoneSurrogates(validEmoji)).toBe(validEmoji);

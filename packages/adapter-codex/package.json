@@ -1,5 +1,5 @@
 {
-  "name": "@neopolitan/adapter-codex",
+  "name": "@neopolitan-ai/adapter-codex",
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@neopolitan/core": "workspace:*",
+    "@neopolitan-ai/core": "workspace:*",
     "zod": "^3.25.76"
   },
   "description": "Clean-room OpenAI Codex app-server JSON-RPC/NDJSON adapter with UTF-16 surrogate sanitization and hang watchdog.",

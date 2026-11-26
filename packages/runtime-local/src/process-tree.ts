@@ -1,5 +1,5 @@
 import { type ChildProcess, spawn as nodeSpawn } from 'node:child_process';
-import { sanitizeProviderFailureMessage } from '@neopolitan/core';
+import { sanitizeProviderFailureMessage } from '@neopolitan-ai/core';
 
 const PARENT_AGENT_ENV_PREFIXES = ['ORCA_', 'T3_', 'TRAYCER_AGENT_'];
 

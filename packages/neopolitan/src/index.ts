@@ -1,19 +1,19 @@
-import { type AcpDriverConfig, createAcpDriver } from '@neopolitan/adapter-acp';
-import { type ClaudeDriverConfig, createClaudeDriver } from '@neopolitan/adapter-claude';
-import { type CodexDriverConfig, createCodexDriver } from '@neopolitan/adapter-codex';
-import { type PtyDriverConfig, createPtyDriver } from '@neopolitan/adapter-pty';
-import { ProviderRegistry } from '@neopolitan/core';
+import { type AcpDriverConfig, createAcpDriver } from '@neopolitan-ai/adapter-acp';
+import { type ClaudeDriverConfig, createClaudeDriver } from '@neopolitan-ai/adapter-claude';
+import { type CodexDriverConfig, createCodexDriver } from '@neopolitan-ai/adapter-codex';
+import { type PtyDriverConfig, createPtyDriver } from '@neopolitan-ai/adapter-pty';
+import { ProviderRegistry } from '@neopolitan-ai/core';
 
-export * from '@neopolitan/core';
-export * from '@neopolitan/runtime-local';
-export * from '@neopolitan/adapter-acp';
-export * from '@neopolitan/adapter-claude';
-export * from '@neopolitan/adapter-codex';
-export * from '@neopolitan/adapter-pty';
-export * from '@neopolitan/auth';
-export * from '@neopolitan/sessions';
-export * from '@neopolitan/workspace';
-export * from '@neopolitan/orchestration';
+export * from '@neopolitan-ai/core';
+export * from '@neopolitan-ai/runtime-local';
+export * from '@neopolitan-ai/adapter-acp';
+export * from '@neopolitan-ai/adapter-claude';
+export * from '@neopolitan-ai/adapter-codex';
+export * from '@neopolitan-ai/adapter-pty';
+export * from '@neopolitan-ai/auth';
+export * from '@neopolitan-ai/sessions';
+export * from '@neopolitan-ai/workspace';
+export * from '@neopolitan-ai/orchestration';
 export {
   AgentRpcClient,
   AgentRpcServer,
@@ -22,7 +22,7 @@ export {
   type RpcMethod,
   type RpcRequestEnvelope,
   type RpcResponseEnvelope,
-} from '@neopolitan/server';
+} from '@neopolitan-ai/server';
 
 export interface DefaultRegistryOptions {
   readonly claude?: ClaudeDriverConfig;

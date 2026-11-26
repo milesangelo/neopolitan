@@ -19,7 +19,7 @@ import {
   type SpawnSpec,
   classifyProviderFailure,
   createPolicyGateMiddleware,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import { z } from 'zod';
 
 export class MockExecutionRuntime implements ExecutionRuntime {

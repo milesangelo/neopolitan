@@ -1,5 +1,5 @@
 {
-  "name": "@neopolitan/server",
+  "name": "@neopolitan-ai/server",
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
@@ -17,8 +17,8 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@neopolitan/core": "workspace:*",
-    "@neopolitan/sessions": "workspace:*",
+    "@neopolitan-ai/core": "workspace:*",
+    "@neopolitan-ai/sessions": "workspace:*",
     "ws": "^8.18.1"
   },
   "devDependencies": {

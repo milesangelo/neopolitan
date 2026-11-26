@@ -1,5 +1,5 @@
 {
-  "name": "neopolitan",
+  "name": "neopolitan-ai",
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
@@ -32,6 +32,7 @@
   },
   "sideEffects": false,
   "bin": {
+    "neopolitan-ai": "./dist/cli.js",
     "neopolitan": "./dist/cli.js"
   },
   "main": "./dist/index.js",
@@ -93,16 +94,16 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@neopolitan/adapter-acp": "workspace:*",
-    "@neopolitan/adapter-claude": "workspace:*",
-    "@neopolitan/adapter-codex": "workspace:*",
-    "@neopolitan/adapter-pty": "workspace:*",
-    "@neopolitan/auth": "workspace:*",
-    "@neopolitan/core": "workspace:*",
-    "@neopolitan/orchestration": "workspace:*",
-    "@neopolitan/runtime-local": "workspace:*",
-    "@neopolitan/server": "workspace:*",
-    "@neopolitan/sessions": "workspace:*",
-    "@neopolitan/workspace": "workspace:*"
+    "@neopolitan-ai/adapter-acp": "workspace:*",
+    "@neopolitan-ai/adapter-claude": "workspace:*",
+    "@neopolitan-ai/adapter-codex": "workspace:*",
+    "@neopolitan-ai/adapter-pty": "workspace:*",
+    "@neopolitan-ai/auth": "workspace:*",
+    "@neopolitan-ai/core": "workspace:*",
+    "@neopolitan-ai/orchestration": "workspace:*",
+    "@neopolitan-ai/runtime-local": "workspace:*",
+    "@neopolitan-ai/server": "workspace:*",
+    "@neopolitan-ai/sessions": "workspace:*",
+    "@neopolitan-ai/workspace": "workspace:*"
   }
 }

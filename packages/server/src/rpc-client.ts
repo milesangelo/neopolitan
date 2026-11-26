@@ -7,7 +7,7 @@ import type {
   ProviderId,
   SendTurnInput,
   SessionAnchor,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import WebSocket from 'ws';
 import type { RpcMethod, RpcResponseEnvelope } from './rpc-server.js';
 

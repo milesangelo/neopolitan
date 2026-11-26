@@ -1,5 +1,5 @@
 {
-  "name": "@neopolitan/sessions",
+  "name": "@neopolitan-ai/sessions",
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@neopolitan/core": "workspace:*"
+    "@neopolitan-ai/core": "workspace:*"
   },
   "description": "Durable JSONL EventStore, TurnItemAccumulator, SessionManager, and token-budgeted cross-provider handoff bundles.",
   "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "sessions"],

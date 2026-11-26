@@ -1,6 +1,6 @@
-import type { ManagedPty, ProcessExitResult } from '@neopolitan/core';
-import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
-import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import type { ManagedPty, ProcessExitResult } from '@neopolitan-ai/core';
+import { LocalExecutionRuntime } from '@neopolitan-ai/runtime-local';
+import { runProviderConformanceSuite } from '@neopolitan-ai/testing/conformance';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   AgentHookServer,
@@ -69,7 +69,7 @@ runProviderConformanceSuite('PtyAdapter (fake PtyBackend)', async () => {
   };
 });
 
-describe('@neopolitan/adapter-pty hooks & OSC 7501', () => {
+describe('@neopolitan-ai/adapter-pty hooks & OSC 7501', () => {
   it('enforces hook-vs-OSC precedence, boundary suppression, and turn-end disposition', () => {
     const parsed = parseOsc7501Sequences(
       'abc\x1b]7501;working\x07def\x1b]7501;state=done\x1b\\',

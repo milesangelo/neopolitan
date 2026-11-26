@@ -8,4 +8,4 @@ When contributing a feature, bug fix, or breaking change to any package in `neop
 pnpm changeset
 ```
 
-Follow the prompts to select affected packages and write a concise summary for the release notes. `neopolitan` and all `@neopolitan/*` packages share a fixed version line configured in `.changeset/config.json`.
+Follow the prompts to select affected packages and write a concise summary for the release notes. `neopolitan` and all `@neopolitan-ai/*` packages share a fixed version line configured in `.changeset/config.json`.

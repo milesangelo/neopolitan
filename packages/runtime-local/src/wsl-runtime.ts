@@ -1,5 +1,5 @@
 import { spawn as nodeSpawn } from 'node:child_process';
-import type { ExecutionRuntime, ManagedProcess, SpawnSpec } from '@neopolitan/core';
+import type { ExecutionRuntime, ManagedProcess, SpawnSpec } from '@neopolitan-ai/core';
 import { wrapChildProcess } from './local-runtime.js';
 
 export const WSL_MAX_COMMAND_LINE_CHARS = 16_000;

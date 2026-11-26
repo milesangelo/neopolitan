@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import * as acp from '@agentclientprotocol/sdk/unstable';
-import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
-import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { LocalExecutionRuntime } from '@neopolitan-ai/runtime-local';
+import { runProviderConformanceSuite } from '@neopolitan-ai/testing/conformance';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   ACP_INT32_ID_FLOOR,
@@ -68,7 +68,7 @@ function createFakeAcpAgentApp(): acp.AgentApp {
 const tempDirs: string[] = [];
 afterEach(async () => {
   for (const dir of tempDirs.splice(0)) {
-    await fs.rm(dir, { recursive: true, force: true });
+    await fs.rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
 });
 
@@ -85,7 +85,7 @@ runProviderConformanceSuite('AcpAdapter (in-process @agentclientprotocol/sdk)', 
   };
 });
 
-describe('@neopolitan/adapter-acp hardening', () => {
+describe('@neopolitan-ai/adapter-acp hardening', () => {
   it('remaps id: 0 to Int32 floor, filters stdout noise, and detects sign-in URLs', async () => {
     const writtenToAgent: string[] = [];
     const signInUrls: string[] = [];

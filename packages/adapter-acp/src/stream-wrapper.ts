@@ -1,5 +1,5 @@
 import * as acp from '@agentclientprotocol/sdk/unstable';
-import { createLfNdjsonFramer } from '@neopolitan/core';
+import { createLfNdjsonFramer } from '@neopolitan-ai/core';
 
 export const ACP_INT32_ID_FLOOR = 2 ** 30;
 export const ACP_INT32_ID_MAX = 2_147_483_647;

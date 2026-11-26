@@ -23,7 +23,7 @@ import {
   type ToolKind,
   classifyProviderFailure,
   createPolicyGateMiddleware,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import { z } from 'zod';
 import { assertPathWithinWorkspace } from './client-policy.js';
 import { type AcpFlavor, resolveAcpFlavor } from './flavors.js';
@@ -219,7 +219,7 @@ class AcpSession implements AgentSession {
 
   async initialize(signal?: AbortSignal): Promise<void> {
     const clientApp = acp
-      .client({ name: '@neopolitan/adapter-acp' })
+      .client({ name: '@neopolitan-ai/adapter-acp' })
       .onRequest(acp.methods.client.session.requestPermission, (ctx) =>
         this.handlePermissionRequest(ctx.params),
       )
@@ -271,7 +271,7 @@ class AcpSession implements AgentSession {
         clientCapabilities: {
           fs: { readTextFile: true, writeTextFile: true },
         },
-        clientInfo: { name: '@neopolitan/adapter-acp', version: '0.1.0' },
+        clientInfo: { name: '@neopolitan-ai/adapter-acp', version: '0.1.0' },
       },
       { cancellationSignal: signal },
     );

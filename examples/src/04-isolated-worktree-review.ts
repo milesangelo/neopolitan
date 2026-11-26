@@ -3,8 +3,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { type ReviewTarget, formatReviewTargetPrompt } from '@neopolitan/core';
-import { GitWorkspaceManager } from '@neopolitan/workspace';
+import { type ReviewTarget, formatReviewTargetPrompt } from '@neopolitan-ai/core';
+import { GitWorkspaceManager } from '@neopolitan-ai/workspace';
 
 const execFile = promisify(execFileCb);
 

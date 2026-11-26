@@ -1,6 +1,6 @@
-import { type AgentEvent, ProviderRegistry } from '@neopolitan/core';
-import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
-import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
+import { type AgentEvent, ProviderRegistry } from '@neopolitan-ai/core';
+import { InMemoryEventStore, SessionManager } from '@neopolitan-ai/sessions';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
 import { afterEach, describe, expect, it } from 'vitest';
 import { AgentRpcClient, AgentRpcServer } from './index.js';
 
@@ -12,7 +12,7 @@ afterEach(async () => {
   for (const s of servers.splice(0)) await s.close();
 });
 
-describe('@neopolitan/server', () => {
+describe('@neopolitan-ai/server', () => {
   it('supports non-blocking HTTP+SSE RPC + interactive gate resolution without deadlocking', async () => {
     const runtime = new MockExecutionRuntime();
     const registry = new ProviderRegistry().register(

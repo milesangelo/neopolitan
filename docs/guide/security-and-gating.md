@@ -8,8 +8,8 @@
 
 ## Subprocess Environment Scrubbing & Credential Storage
 - `LocalExecutionRuntime` strips ambient parent orchestrator session tokens before spawning child CLIs (`stripAgentSessionEnv`).
-- `@neopolitan/adapter-claude` scrubs rejected `~/.claude.json` API keys and leaks unless isolated by explicit `AuthProfile` configuration.
-- `@neopolitan/auth` provides `EncryptedHostFileSecretStore` (AES-256-GCM host-key sealing) and fail-open auth status checks.
+- `@neopolitan-ai/adapter-claude` scrubs rejected `~/.claude.json` API keys and leaks unless isolated by explicit `AuthProfile` configuration.
+- `@neopolitan-ai/auth` provides `EncryptedHostFileSecretStore` (AES-256-GCM host-key sealing) and fail-open auth status checks.
 
 ## Failure Sanitization
 `redactSecrets()` and `classifyProviderFailure()` scrub `Bearer` tokens, API keys (`sk-ant-*`, `sk-proj-*`, `ghp_*`, `AIza*`, `xai-*`), auth headers, and URL query credentials before surfacing errors to RPC clients or session handoffs.

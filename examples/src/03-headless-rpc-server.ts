@@ -1,7 +1,7 @@
-import { type AgentEvent, ProviderRegistry } from '@neopolitan/core';
-import { AgentRpcClient, AgentRpcServer } from '@neopolitan/server';
-import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
-import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
+import { type AgentEvent, ProviderRegistry } from '@neopolitan-ai/core';
+import { AgentRpcClient, AgentRpcServer } from '@neopolitan-ai/server';
+import { InMemoryEventStore, SessionManager } from '@neopolitan-ai/sessions';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
 
 async function main(): Promise<void> {
   const runtime = new MockExecutionRuntime();

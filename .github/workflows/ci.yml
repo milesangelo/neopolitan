@@ -35,7 +35,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        node: [20, 22, 24]
+        node: [22, 24]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -58,6 +58,19 @@ jobs:
         with:
           name: coverage-report
           path: coverage/
+
+  test-rollup:
+    name: Test
+    needs: [test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assert all matrix test legs succeeded
+        run: |
+          if [ "${{ needs.test.result }}" != "success" ]; then
+            echo "Matrix test result: ${{ needs.test.result }}"
+            exit 1
+          fi
 
   pack-and-verify:
     name: Pack, Publint, Attw & Consumer E2E

@@ -6,9 +6,9 @@ import {
   antigravityFlavor,
   assertPathWithinWorkspace,
   createAcpDriver,
-} from '@neopolitan/adapter-acp';
-import { type AgentEvent, createPolicyGateMiddleware } from '@neopolitan/core';
-import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
+} from '@neopolitan-ai/adapter-acp';
+import { type AgentEvent, createPolicyGateMiddleware } from '@neopolitan-ai/core';
+import { LocalExecutionRuntime } from '@neopolitan-ai/runtime-local';
 
 function createSimulatedAntigravityAgent(): acp.AgentApp {
   return acp

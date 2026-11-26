@@ -1,1 +1,1 @@
-export * from '@neopolitan/adapter-pty';
+export * from '@neopolitan-ai/adapter-pty';

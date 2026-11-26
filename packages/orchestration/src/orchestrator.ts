@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
-import type { AgentSession, ModelSelection, ProviderId } from '@neopolitan/core';
-import type { SessionManager } from '@neopolitan/sessions';
+import type { AgentSession, ModelSelection, ProviderId } from '@neopolitan-ai/core';
+import type { SessionManager } from '@neopolitan-ai/sessions';
 
 export interface AgentSpawnSpec {
   readonly agentId?: string;

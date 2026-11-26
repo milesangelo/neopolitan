@@ -1,4 +1,4 @@
-import type { ProviderFailureClass } from '@neopolitan/core';
+import type { ProviderFailureClass } from '@neopolitan-ai/core';
 
 export interface AcpFlavor {
   readonly id: string;

@@ -1,7 +1,7 @@
-# `@neopolitan/workspace`
+# `@neopolitan-ai/workspace`
 
 Multi-repo Git worktree manager (`GitWorkspaceManager`), `classifyWorktreeTier`, `AGENTS.md`/`CLAUDE.md` discovery, and isolated `DevServer` helper for Neopolitan.
 
 ```bash
-npm install @neopolitan/workspace
+npm install @neopolitan-ai/workspace
 ```

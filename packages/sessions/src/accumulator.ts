@@ -4,7 +4,7 @@ import type {
   GateResolution,
   PlanTodoItem,
   ToolKind,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 
 export type ContentBlock =
   | {

@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as acp from '@agentclientprotocol/sdk/unstable';
-import { type AgentEvent, type GateRequest, classifyProviderFailure } from '@neopolitan/core';
-import { MockExecutionRuntime } from '@neopolitan/testing';
+import { type AgentEvent, type GateRequest, classifyProviderFailure } from '@neopolitan-ai/core';
+import { MockExecutionRuntime } from '@neopolitan-ai/testing';
 import { describe, expect, it } from 'vitest';
 import { createAcpDriver, grokFlavor, opencodeFlavor, resolveAcpFlavor } from './index.js';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@neopolitan/testing",
+  "name": "@neopolitan-ai/testing",
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
@@ -22,13 +22,13 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@neopolitan/core": "workspace:*",
+    "@neopolitan-ai/core": "workspace:*",
     "zod": "^3.25.76"
   },
   "peerDependencies": {
     "vitest": ">=2.0.0"
   },
-  "description": "Vitest-free mock runtime and mock provider driver for Neopolitan, plus shared @neopolitan/testing/conformance test suite.",
+  "description": "Vitest-free mock runtime and mock provider driver for Neopolitan, plus shared @neopolitan-ai/testing/conformance test suite.",
   "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "testing"],
   "homepage": "https://milesangelo.github.io/neopolitan/",
   "repository": {

@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a reproducible issue in neopolitan or any @neopolitan/* package
+description: Report a reproducible issue in neopolitan or any @neopolitan-ai/* package
 title: "[Bug]: "
 labels: ["bug"]
 body:
@@ -15,19 +15,19 @@ body:
     attributes:
       label: Affected Package / CLI
       options:
-        - neopolitan (umbrella / CLI)
-        - "@neopolitan/core"
-        - "@neopolitan/runtime-local"
-        - "@neopolitan/adapter-acp"
-        - "@neopolitan/adapter-claude"
-        - "@neopolitan/adapter-codex"
-        - "@neopolitan/adapter-pty"
-        - "@neopolitan/auth"
-        - "@neopolitan/sessions"
-        - "@neopolitan/workspace"
-        - "@neopolitan/server"
-        - "@neopolitan/orchestration"
-        - "@neopolitan/testing"
+        - neopolitan-ai (umbrella / CLI)
+        - "@neopolitan-ai/core"
+        - "@neopolitan-ai/runtime-local"
+        - "@neopolitan-ai/adapter-acp"
+        - "@neopolitan-ai/adapter-claude"
+        - "@neopolitan-ai/adapter-codex"
+        - "@neopolitan-ai/adapter-pty"
+        - "@neopolitan-ai/auth"
+        - "@neopolitan-ai/sessions"
+        - "@neopolitan-ai/workspace"
+        - "@neopolitan-ai/server"
+        - "@neopolitan-ai/orchestration"
+        - "@neopolitan-ai/testing"
     validations:
       required: true
   - type: input
