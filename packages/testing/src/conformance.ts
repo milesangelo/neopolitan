@@ -5,7 +5,7 @@ import {
   type OpenSessionInput,
   type ProviderAdapter,
   providerCapabilitiesSchema,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import { describe, expect, it } from 'vitest';
 
 export interface ConformanceHarnessContext {

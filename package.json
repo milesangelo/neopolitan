@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "license": "MIT",
-  "description": "Monorepo for Neopolitan (@neopolitan/*) — provider-agnostic TypeScript SDK for coding-agent harnesses.",
+  "description": "Monorepo for Neopolitan (@neopolitan-ai/*) — provider-agnostic TypeScript SDK for coding-agent harnesses.",
   "repository": {
     "type": "git",
     "url": "https://github.com/milesangelo/neopolitan.git"

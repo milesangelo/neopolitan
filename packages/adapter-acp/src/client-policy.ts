@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { ExecutionRuntime } from '@neopolitan/core';
+import type { ExecutionRuntime } from '@neopolitan-ai/core';
 
 export const MAX_ACP_CHANGED_PATHS = 256;
 

@@ -1,6 +1,6 @@
 # Session Persistence & Cross-Provider Handoff
 
-`@neopolitan/sessions` persists normalized `AgentEvent` streams and coordinates seamless switching between providers.
+`@neopolitan-ai/sessions` persists normalized `AgentEvent` streams and coordinates seamless switching between providers.
 
 ## Durable `JsonlEventStore`
 - Appends events per session using serialized write queues and `seq` deduplication.
@@ -15,5 +15,5 @@
 ## CLI Equivalent
 
 ```bash
-npx neopolitan handoff --store ./.sessions --session sess-1 --to codex --budget 8000
+npx neopolitan-ai handoff --store ./.sessions --session sess-1 --to codex --budget 8000
 ```

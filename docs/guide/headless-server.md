@@ -1,4 +1,4 @@
-# Headless RPC Server (`@neopolitan/server`)
+# Headless RPC Server (`@neopolitan-ai/server`)
 
 `AgentRpcServer` exposes your `SessionManager` over both HTTP+SSE and WebSocket (`ws`) for desktop frontends, web dashboards, or remote workers:
 
@@ -10,5 +10,5 @@
 Start immediately from the CLI:
 
 ```bash
-npx neopolitan serve --host 127.0.0.1 --port 7420 --token dev-secret --store ./.sessions
+npx neopolitan-ai serve --host 127.0.0.1 --port 7420 --token dev-secret --store ./.sessions
 ```

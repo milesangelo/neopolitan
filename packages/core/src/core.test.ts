@@ -1,5 +1,5 @@
-import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
-import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
+import { runProviderConformanceSuite } from '@neopolitan-ai/testing/conformance';
 import { describe, expect, it } from 'vitest';
 import {
   EventHub,
@@ -16,7 +16,7 @@ import {
   sanitizeProviderFailureMessage,
 } from './index.js';
 
-describe('@neopolitan/core', () => {
+describe('@neopolitan-ai/core', () => {
   it('buffers startup events in EventHub for late subscribers and respects includeRaw', async () => {
     const hub = new EventHub({ sessionId: 's1' });
     hub.emit({

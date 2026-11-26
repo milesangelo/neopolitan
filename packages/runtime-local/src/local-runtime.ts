@@ -7,7 +7,7 @@ import type {
   ManagedProcess,
   ProcessExitResult,
   SpawnSpec,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import { BoundedStderrTail, killProcessTree, stripAgentSessionEnv } from './process-tree.js';
 
 export interface LocalExecutionRuntimeOptions {

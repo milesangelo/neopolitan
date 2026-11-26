@@ -7,7 +7,7 @@ import {
   EncryptedHostFileSecretStore,
   resolveProviderEnv,
   shouldBlockSendForAuthStatus,
-} from '@neopolitan/auth';
+} from '@neopolitan-ai/auth';
 import {
   type AgentEvent,
   type AgentSession,
@@ -15,14 +15,14 @@ import {
   type ProviderDriver,
   ProviderRegistry,
   type SendTurnInput,
-} from '@neopolitan/core';
-import { FallbackPolicyEngine, Orchestrator } from '@neopolitan/orchestration';
-import { InMemoryEventStore, SessionManager } from '@neopolitan/sessions';
+} from '@neopolitan-ai/core';
+import { FallbackPolicyEngine, Orchestrator } from '@neopolitan-ai/orchestration';
+import { InMemoryEventStore, SessionManager } from '@neopolitan-ai/sessions';
 import {
   MOCK_BASE_CAPABILITIES,
   MockExecutionRuntime,
   createMockDriver,
-} from '@neopolitan/testing';
+} from '@neopolitan-ai/testing';
 import { z } from 'zod';
 
 /**

@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { type AgentEvent, type AgentSession, ProviderRegistry } from '@neopolitan/core';
-import { JsonlEventStore, SessionManager, TurnItemAccumulator } from '@neopolitan/sessions';
-import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
+import { type AgentEvent, type AgentSession, ProviderRegistry } from '@neopolitan-ai/core';
+import { JsonlEventStore, SessionManager, TurnItemAccumulator } from '@neopolitan-ai/sessions';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
 
 async function runTurn(session: AgentSession, prompt: string, accumulator?: TurnItemAccumulator) {
   const ac = new AbortController();

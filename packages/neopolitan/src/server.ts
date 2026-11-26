@@ -6,4 +6,4 @@ export {
   type RpcMethod,
   type RpcRequestEnvelope,
   type RpcResponseEnvelope,
-} from '@neopolitan/server';
+} from '@neopolitan-ai/server';

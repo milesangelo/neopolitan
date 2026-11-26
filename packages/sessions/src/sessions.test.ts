@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { type AgentEvent, ProviderRegistry } from '@neopolitan/core';
-import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
+import { type AgentEvent, ProviderRegistry } from '@neopolitan-ai/core';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   InMemoryEventStore,
@@ -15,11 +15,11 @@ import {
 const tempDirs: string[] = [];
 afterEach(async () => {
   for (const dir of tempDirs.splice(0)) {
-    await fs.rm(dir, { recursive: true, force: true });
+    await fs.rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
 });
 
-describe('@neopolitan/sessions', () => {
+describe('@neopolitan-ai/sessions', () => {
   it('persists JSONL events with seq deduplication and folds TurnItemAccumulator + history.reset', async () => {
     const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'agent-sdk-sess-'));
     tempDirs.push(dir);

@@ -13,7 +13,7 @@ import {
   type PtySpawnSpec,
   type SendTurnInput,
   type SessionAnchor,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import { z } from 'zod';
 import {
   type HookStatusUpdate,

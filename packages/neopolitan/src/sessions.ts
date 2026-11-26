@@ -1,1 +1,1 @@
-export * from '@neopolitan/sessions';
+export * from '@neopolitan-ai/sessions';

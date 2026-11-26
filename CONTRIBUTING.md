@@ -29,20 +29,20 @@ pnpm run test:packed
 ```
 
 Key architectural boundaries enforced automatically by `scripts/check-boundaries.mjs`:
-- `@neopolitan/core` must stay pure TypeScript + `zod` (no `node:child_process`, `node-pty`, `electron`, `effect`, or `@neopolitan/*` imports).
+- `@neopolitan-ai/core` must stay pure TypeScript + `zod` (no `node:child_process`, `node-pty`, `electron`, `effect`, or `@neopolitan-ai/*` imports).
 - `node-pty` must stay isolated as an optional `peerDependency` in `packages/adapter-pty`.
-- `@neopolitan/testing` runtime exports (`src/index.ts`) must remain Vitest-free (`vitest` belongs strictly in `src/conformance.ts`).
+- `@neopolitan-ai/testing` runtime exports (`src/index.ts`) must remain Vitest-free (`vitest` belongs strictly in `src/conformance.ts`).
 
 ## Adding or Modifying a Provider Adapter
 
-1. Implement `ProviderDriver`, `ProviderAdapter`, and `AgentSession` from `@neopolitan/core`.
-2. Wire `runProviderConformanceSuite` from `@neopolitan/testing/conformance` into the adapter's test suite.
+1. Implement `ProviderDriver`, `ProviderAdapter`, and `AgentSession` from `@neopolitan-ai/core`.
+2. Wire `runProviderConformanceSuite` from `@neopolitan-ai/testing/conformance` into the adapter's test suite.
 3. Add a sanitized golden NDJSON transcript under `tests/fixtures/` and an adapter replay test (`fixtures.test.ts`).
 4. Do not send billed LLM API calls during `pnpm test`. Put opt-in CLI probes or zero-cost protocol handshakes behind `NEOPOLITAN_LIVE_TESTS=1`.
 
 ## Changesets & Releases
 
-All publishable packages (`neopolitan` + `@neopolitan/*`) follow a fixed version line managed by Changesets:
+All publishable packages (`neopolitan` + `@neopolitan-ai/*`) follow a fixed version line managed by Changesets:
 
 ```bash
 pnpm changeset

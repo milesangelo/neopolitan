@@ -1,5 +1,5 @@
 {
-  "name": "@neopolitan/adapter-pty",
+  "name": "@neopolitan-ai/adapter-pty",
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@neopolitan/core": "workspace:*",
+    "@neopolitan-ai/core": "workspace:*",
     "zod": "^3.25.76"
   },
   "peerDependencies": {

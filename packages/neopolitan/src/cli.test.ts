@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { ProviderRegistry } from '@neopolitan/core';
-import { JsonlEventStore } from '@neopolitan/sessions';
-import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
+import { ProviderRegistry } from '@neopolitan-ai/core';
+import { JsonlEventStore } from '@neopolitan-ai/sessions';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
 import { describe, expect, it } from 'vitest';
 import { runCli } from './cli.js';
 import { createDefaultRegistry } from './index.js';
@@ -109,7 +109,7 @@ describe('neopolitan umbrella & cli', () => {
       expect(out.join('\n')).toContain('Cross-Provider Context Handoff (claude-code -> codex)');
       expect(out.join('\n')).not.toContain('sk-ant-secretvalue12345');
     } finally {
-      await fs.rm(tmpDir, { recursive: true, force: true });
+      await fs.rm(tmpDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
     }
   });
 

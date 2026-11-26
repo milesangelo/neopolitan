@@ -1,1 +1,1 @@
-export * from '@neopolitan/orchestration';
+export * from '@neopolitan-ai/orchestration';

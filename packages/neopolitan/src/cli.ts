@@ -9,15 +9,15 @@ import type {
   PermissionMode,
   ProviderId,
   ProviderRegistry,
-} from '@neopolitan/core';
-import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
-import { AgentRpcServer } from '@neopolitan/server';
+} from '@neopolitan-ai/core';
+import { LocalExecutionRuntime } from '@neopolitan-ai/runtime-local';
+import { AgentRpcServer } from '@neopolitan-ai/server';
 import {
   InMemoryEventStore,
   JsonlEventStore,
   SessionManager,
   compileHandoffBundle,
-} from '@neopolitan/sessions';
+} from '@neopolitan-ai/sessions';
 import { createDefaultRegistry } from './index.js';
 
 export interface CliDependencies {

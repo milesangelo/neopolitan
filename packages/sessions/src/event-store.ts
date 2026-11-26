@@ -5,7 +5,7 @@ import {
   type ProviderId,
   type SessionAnchor,
   agentEventSchema,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 
 export interface SessionSnapshot {
   readonly sessionId: string;

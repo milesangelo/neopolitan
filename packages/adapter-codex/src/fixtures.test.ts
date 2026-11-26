@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { AgentEvent, GateRequest } from '@neopolitan/core';
-import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
+import type { AgentEvent, GateRequest } from '@neopolitan-ai/core';
+import { LocalExecutionRuntime } from '@neopolitan-ai/runtime-local';
 import { afterEach, describe, expect, it } from 'vitest';
 import { createCodexDriver } from './index.js';
 
@@ -15,7 +15,7 @@ const fixturesDir = path.resolve(
 const tempDirs: string[] = [];
 afterEach(async () => {
   for (const d of tempDirs.splice(0)) {
-    await fs.rm(d, { recursive: true, force: true });
+    await fs.rm(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
 });
 

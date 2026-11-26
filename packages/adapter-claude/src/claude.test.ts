@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { LocalExecutionRuntime } from '@neopolitan/runtime-local';
-import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { LocalExecutionRuntime } from '@neopolitan-ai/runtime-local';
+import { runProviderConformanceSuite } from '@neopolitan-ai/testing/conformance';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   createClaudeDriver,
@@ -38,7 +38,7 @@ console.log(JSON.stringify({ type: 'result', is_error: false, session_id: 'claud
 const tempDirs: string[] = [];
 afterEach(async () => {
   for (const dir of tempDirs.splice(0)) {
-    await fs.rm(dir, { recursive: true, force: true });
+    await fs.rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
 });
 
@@ -60,7 +60,7 @@ runProviderConformanceSuite('ClaudeAdapter (fake stream-json subprocess)', async
   };
 });
 
-describe('@neopolitan/adapter-claude helpers', () => {
+describe('@neopolitan-ai/adapter-claude helpers', () => {
   it('scrubs rejected ~/.claude.json API keys, leaks, and splices script prefixArgs at index 1', () => {
     const spliced = splicePrefixArgsForScript(
       '/tmp/cli.mjs',

@@ -1,4 +1,4 @@
-import type { ProviderId } from '@neopolitan/core';
+import type { ProviderId } from '@neopolitan-ai/core';
 import type { SecretStore } from './secret-store.js';
 
 export type AuthStatus =

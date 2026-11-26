@@ -7,8 +7,8 @@ import type {
   ProviderId,
   SendTurnInput,
   SteerTurnInput,
-} from '@neopolitan/core';
-import type { EventStore, SessionManager } from '@neopolitan/sessions';
+} from '@neopolitan-ai/core';
+import type { EventStore, SessionManager } from '@neopolitan-ai/sessions';
 import { type WebSocket, WebSocketServer } from 'ws';
 
 export type RpcMethod =

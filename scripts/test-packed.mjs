@@ -93,11 +93,11 @@ try {
         private: true,
         type: 'module',
         dependencies: {
-          neopolitan: overrides.neopolitan,
-          '@neopolitan/core': overrides['@neopolitan/core'],
+          'neopolitan-ai': overrides['neopolitan-ai'],
+          '@neopolitan-ai/core': overrides['@neopolitan-ai/core'],
         },
         devDependencies: {
-          '@neopolitan/testing': overrides['@neopolitan/testing'],
+          '@neopolitan-ai/testing': overrides['@neopolitan-ai/testing'],
           typescript: '^5.8.3',
         },
       },
@@ -178,14 +178,14 @@ try {
   LocalExecutionRuntime,
   SessionManager,
   createDefaultRegistry,
-} from 'neopolitan';
-import { ACP_BASE_CAPABILITIES } from 'neopolitan/acp';
-import { CLAUDE_BASE_CAPABILITIES } from 'neopolitan/claude';
-import { CODEX_BASE_CAPABILITIES } from 'neopolitan/codex';
-import { PTY_BASE_CAPABILITIES } from 'neopolitan/pty';
-import { AgentRpcServer } from 'neopolitan/server';
-import { redactSecrets } from '@neopolitan/core';
-import { MockExecutionRuntime, createMockDriver } from '@neopolitan/testing';
+} from 'neopolitan-ai';
+import { ACP_BASE_CAPABILITIES } from 'neopolitan-ai/acp';
+import { CLAUDE_BASE_CAPABILITIES } from 'neopolitan-ai/claude';
+import { CODEX_BASE_CAPABILITIES } from 'neopolitan-ai/codex';
+import { PTY_BASE_CAPABILITIES } from 'neopolitan-ai/pty';
+import { AgentRpcServer } from 'neopolitan-ai/server';
+import { redactSecrets } from '@neopolitan-ai/core';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
 
 const registry = createDefaultRegistry().register(createMockDriver());
 const store = new InMemoryEventStore();
@@ -225,12 +225,13 @@ console.log('Packed consumer TypeScript & runtime verification passed!');
   run(tscBin, ['-p', 'tsconfig.bundler.json'], consumerDir);
   console.log(run(process.execPath, ['dist/verify.js'], consumerDir).trim());
 
-  const cliBin = binPath(consumerDir, 'neopolitan');
+  const cliBin = binPath(consumerDir, 'neopolitan-ai');
+  const cliAliasBin = binPath(consumerDir, 'neopolitan');
   const ver = run(cliBin, ['--version'], consumerDir).trim();
   if (!/^\d+\.\d+\.\d+/.test(ver)) {
     throw new Error(`Unexpected CLI --version output: ${ver}`);
   }
-  const doctorJson = JSON.parse(run(cliBin, ['doctor', '--json'], consumerDir));
+  const doctorJson = JSON.parse(run(cliAliasBin, ['doctor', '--json'], consumerDir));
   if (!Array.isArray(doctorJson.providers) || doctorJson.providers.length < 4) {
     throw new Error(`Unexpected CLI doctor output: ${JSON.stringify(doctorJson)}`);
   }

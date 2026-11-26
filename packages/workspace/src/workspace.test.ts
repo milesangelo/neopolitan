@@ -11,11 +11,11 @@ const tempDirs: string[] = [];
 
 afterEach(async () => {
   for (const dir of tempDirs.splice(0)) {
-    await fs.rm(dir, { recursive: true, force: true });
+    await fs.rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
 });
 
-describe('@neopolitan/workspace', () => {
+describe('@neopolitan-ai/workspace', () => {
   it('classifies worktree cleanup safety tiers accurately', () => {
     expect(
       classifyWorktreeTier({

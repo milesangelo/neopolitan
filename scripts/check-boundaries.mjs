@@ -32,7 +32,7 @@ function extractImports(content) {
   return specs;
 }
 
-// 1. @neopolitan/core purity guard
+// 1. @neopolitan-ai/core purity guard
 for (const file of walkTsFiles(path.join(packagesDir, 'core', 'src'))) {
   const content = fs.readFileSync(file, 'utf8');
   for (const spec of extractImports(content)) {
@@ -43,10 +43,10 @@ for (const file of walkTsFiles(path.join(packagesDir, 'core', 'src'))) {
       spec === 'electron' ||
       spec === 'effect' ||
       spec.startsWith('effect/') ||
-      spec.startsWith('@neopolitan/')
+      spec.startsWith('@neopolitan-ai/')
     ) {
       violations.push(
-        `@neopolitan/core boundary violation in ${path.relative(rootDir, file)}: forbidden import "${spec}"`,
+        `@neopolitan-ai/core boundary violation in ${path.relative(rootDir, file)}: forbidden import "${spec}"`,
       );
     }
   }
@@ -86,14 +86,14 @@ for (const entry of fs.readdirSync(packagesDir, { withFileTypes: true })) {
   }
 }
 
-// 3. @neopolitan/testing Vitest runtime isolation guard
+// 3. @neopolitan-ai/testing Vitest runtime isolation guard
 for (const rel of ['src/index.ts', 'src/mock-adapter.ts']) {
   const file = path.join(packagesDir, 'testing', rel);
   if (fs.existsSync(file)) {
     const specs = extractImports(fs.readFileSync(file, 'utf8'));
     if (specs.some((s) => s === 'vitest' || s.startsWith('vitest/'))) {
       violations.push(
-        `@neopolitan/testing runtime helper ${rel} must not import vitest (keep vitest isolated to src/conformance.ts)`,
+        `@neopolitan-ai/testing runtime helper ${rel} must not import vitest (keep vitest isolated to src/conformance.ts)`,
       );
     }
   }
@@ -151,7 +151,7 @@ for (const entry of fs.readdirSync(packagesDir, { withFileTypes: true })) {
     if (String(spec).startsWith('file:')) {
       violations.push(`${pkgJson.name}: disallowed file: dependency "${depName}": "${spec}"`);
     }
-    if (depName === 'neopolitan' || depName.startsWith('@neopolitan/')) {
+    if (depName === 'neopolitan-ai' || depName.startsWith('@neopolitan-ai/')) {
       workspaceDeps.push(depName);
     }
   }
@@ -159,7 +159,8 @@ for (const entry of fs.readdirSync(packagesDir, { withFileTypes: true })) {
 
   const tsRefs = new Set((tsconfig.references ?? []).map((r) => path.posix.basename(r.path)));
   for (const depName of workspaceDeps) {
-    const depDir = depName === 'neopolitan' ? 'neopolitan' : depName.replace('@neopolitan/', '');
+    const depDir =
+      depName === 'neopolitan-ai' ? 'neopolitan' : depName.replace('@neopolitan-ai/', '');
     if (!tsRefs.has(depDir)) {
       violations.push(
         `${pkgJson.name} tsconfig.json missing project reference "../${depDir}" required by package.json`,

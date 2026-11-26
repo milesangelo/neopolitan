@@ -14,7 +14,7 @@ import {
   type TokenUsage,
   classifyProviderFailure,
   createLfNdjsonFramer,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import { z } from 'zod';
 import {
   type ClaudeJsonConfig,
@@ -156,7 +156,7 @@ class ClaudeSession implements AgentSession {
 
   private readonly hub: EventHub;
   private activeAbort?: AbortController;
-  private activeProcess?: import('@neopolitan/core').ManagedProcess;
+  private activeProcess?: import('@neopolitan-ai/core').ManagedProcess;
   private closed = false;
   private expectedResumeId?: string;
   private lastMessageUuid?: string;
@@ -252,7 +252,7 @@ class ClaudeSession implements AgentSession {
 
   private async consumeStreamJson(
     turnId: string,
-    proc: import('@neopolitan/core').ManagedProcess,
+    proc: import('@neopolitan-ai/core').ManagedProcess,
     signal: AbortSignal,
   ): Promise<void> {
     const blockId = `msg-${turnId}`;

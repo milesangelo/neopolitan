@@ -9,7 +9,7 @@ import {
   type ProviderRegistry,
   type SessionAnchor,
   redactSecrets,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import type { EventStore, SessionSnapshot } from './event-store.js';
 
 export const DEFAULT_HANDOFF_TOKEN_CAP = 16_000;

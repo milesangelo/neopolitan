@@ -1,5 +1,5 @@
 {
-  "name": "@neopolitan/workspace",
+  "name": "@neopolitan-ai/workspace",
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@neopolitan/core": "workspace:*"
+    "@neopolitan-ai/core": "workspace:*"
   },
   "description": "Multi-repo Git worktree lifecycle manager, cleanup safety classifier, instruction file discovery, and isolated DevServer helper.",
   "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "workspace"],

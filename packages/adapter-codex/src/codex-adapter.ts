@@ -20,7 +20,7 @@ import {
   classifyProviderFailure,
   createPolicyGateMiddleware,
   formatReviewTargetPrompt,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 import { z } from 'zod';
 import { CodexAppServerClient } from './codex-client.js';
 import { sanitizeLoneSurrogates } from './sanitize.js';

@@ -1,4 +1,4 @@
-import type { ProviderFailureClass, ProviderId } from '@neopolitan/core';
+import type { ProviderFailureClass, ProviderId } from '@neopolitan-ai/core';
 
 export type FallbackRung = 'profile' | 'tier' | 'wait' | 'notify';
 

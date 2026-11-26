@@ -3,7 +3,7 @@ import {
   type ManagedProcess,
   ThreadInUseError,
   createLfNdjsonFramer,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 
 export const DEFAULT_CODEX_REQUEST_TIMEOUT_MS = 30_000;
 export const DEFAULT_CODEX_HANG_TIMEOUT_MS = 120_000;
@@ -64,7 +64,7 @@ export class CodexAppServerClient {
     void this.readLoop();
 
     await this.request('initialize', {
-      clientInfo: { name: '@neopolitan/adapter-codex', version: '0.1.0' },
+      clientInfo: { name: '@neopolitan-ai/adapter-codex', version: '0.1.0' },
       capabilities: { experimentalApi: true },
     });
     await this.notify('initialized', {});

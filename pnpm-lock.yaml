@@ -50,40 +50,40 @@ importers:
       '@agentclientprotocol/sdk':
         specifier: ^2.12.0
         version: 2.12.0(zod@3.25.76)
-      '@neopolitan/adapter-acp':
+      '@neopolitan-ai/adapter-acp':
         specifier: workspace:*
         version: link:../packages/adapter-acp
-      '@neopolitan/adapter-claude':
+      '@neopolitan-ai/adapter-claude':
         specifier: workspace:*
         version: link:../packages/adapter-claude
-      '@neopolitan/adapter-codex':
+      '@neopolitan-ai/adapter-codex':
         specifier: workspace:*
         version: link:../packages/adapter-codex
-      '@neopolitan/adapter-pty':
+      '@neopolitan-ai/adapter-pty':
         specifier: workspace:*
         version: link:../packages/adapter-pty
-      '@neopolitan/auth':
+      '@neopolitan-ai/auth':
         specifier: workspace:*
         version: link:../packages/auth
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../packages/core
-      '@neopolitan/orchestration':
+      '@neopolitan-ai/orchestration':
         specifier: workspace:*
         version: link:../packages/orchestration
-      '@neopolitan/runtime-local':
+      '@neopolitan-ai/runtime-local':
         specifier: workspace:*
         version: link:../packages/runtime-local
-      '@neopolitan/server':
+      '@neopolitan-ai/server':
         specifier: workspace:*
         version: link:../packages/server
-      '@neopolitan/sessions':
+      '@neopolitan-ai/sessions':
         specifier: workspace:*
         version: link:../packages/sessions
-      '@neopolitan/testing':
+      '@neopolitan-ai/testing':
         specifier: workspace:*
         version: link:../packages/testing
-      '@neopolitan/workspace':
+      '@neopolitan-ai/workspace':
         specifier: workspace:*
         version: link:../packages/workspace
       zod:
@@ -95,7 +95,7 @@ importers:
       '@agentclientprotocol/sdk':
         specifier: ^2.12.0
         version: 2.12.0(zod@3.25.76)
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -104,7 +104,7 @@ importers:
 
   packages/adapter-claude:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -113,7 +113,7 @@ importers:
 
   packages/adapter-codex:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -122,7 +122,7 @@ importers:
 
   packages/adapter-pty:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -131,7 +131,7 @@ importers:
 
   packages/auth:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
 
@@ -143,61 +143,61 @@ importers:
 
   packages/neopolitan:
     dependencies:
-      '@neopolitan/adapter-acp':
+      '@neopolitan-ai/adapter-acp':
         specifier: workspace:*
         version: link:../adapter-acp
-      '@neopolitan/adapter-claude':
+      '@neopolitan-ai/adapter-claude':
         specifier: workspace:*
         version: link:../adapter-claude
-      '@neopolitan/adapter-codex':
+      '@neopolitan-ai/adapter-codex':
         specifier: workspace:*
         version: link:../adapter-codex
-      '@neopolitan/adapter-pty':
+      '@neopolitan-ai/adapter-pty':
         specifier: workspace:*
         version: link:../adapter-pty
-      '@neopolitan/auth':
+      '@neopolitan-ai/auth':
         specifier: workspace:*
         version: link:../auth
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
-      '@neopolitan/orchestration':
+      '@neopolitan-ai/orchestration':
         specifier: workspace:*
         version: link:../orchestration
-      '@neopolitan/runtime-local':
+      '@neopolitan-ai/runtime-local':
         specifier: workspace:*
         version: link:../runtime-local
-      '@neopolitan/server':
+      '@neopolitan-ai/server':
         specifier: workspace:*
         version: link:../server
-      '@neopolitan/sessions':
+      '@neopolitan-ai/sessions':
         specifier: workspace:*
         version: link:../sessions
-      '@neopolitan/workspace':
+      '@neopolitan-ai/workspace':
         specifier: workspace:*
         version: link:../workspace
 
   packages/orchestration:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
-      '@neopolitan/sessions':
+      '@neopolitan-ai/sessions':
         specifier: workspace:*
         version: link:../sessions
 
   packages/runtime-local:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
 
   packages/server:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
-      '@neopolitan/sessions':
+      '@neopolitan-ai/sessions':
         specifier: workspace:*
         version: link:../sessions
       ws:
@@ -210,13 +210,13 @@ importers:
 
   packages/sessions:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
 
   packages/testing:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -225,7 +225,7 @@ importers:
 
   packages/workspace:
     dependencies:
-      '@neopolitan/core':
+      '@neopolitan-ai/core':
         specifier: workspace:*
         version: link:../core
 

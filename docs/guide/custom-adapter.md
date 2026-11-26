@@ -1,6 +1,6 @@
 # Custom Adapter Authoring & Conformance
 
-Any third-party coding agent CLI or HTTP runtime can plug into Neopolitan by implementing `ProviderDriver`, `ProviderAdapter`, and `AgentSession` from `@neopolitan/core`.
+Any third-party coding agent CLI or HTTP runtime can plug into Neopolitan by implementing `ProviderDriver`, `ProviderAdapter`, and `AgentSession` from `@neopolitan-ai/core`.
 
 ## Step 1: Implement `ProviderDriver`
 
@@ -12,7 +12,7 @@ import {
   type OpenSessionInput,
   type ProviderCapabilities,
   type ProviderDriver,
-} from '@neopolitan/core';
+} from '@neopolitan-ai/core';
 
 export const MY_CAPABILITIES: ProviderCapabilities = {
   transport: 'http',
@@ -27,10 +27,10 @@ export const MY_CAPABILITIES: ProviderCapabilities = {
 
 ## Step 2: Run the Shared Conformance Suite
 
-Wire `runProviderConformanceSuite` from `@neopolitan/testing/conformance` inside your adapter's `.test.ts` file:
+Wire `runProviderConformanceSuite` from `@neopolitan-ai/testing/conformance` inside your adapter's `.test.ts` file:
 
 ```ts
-import { runProviderConformanceSuite } from '@neopolitan/testing/conformance';
+import { runProviderConformanceSuite } from '@neopolitan-ai/testing/conformance';
 
 runProviderConformanceSuite('MyCustomAdapter', async () => {
   return {

@@ -15,11 +15,11 @@ import {
 const tempDirs: string[] = [];
 afterEach(async () => {
   for (const dir of tempDirs.splice(0)) {
-    await fs.rm(dir, { recursive: true, force: true });
+    await fs.rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
 });
 
-describe('@neopolitan/auth', () => {
+describe('@neopolitan-ai/auth', () => {
   it('seals and unseals secrets with AES-256-GCM host-key store', async () => {
     const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'agent-sdk-auth-'));
     tempDirs.push(dir);
