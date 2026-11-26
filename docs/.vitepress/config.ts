@@ -5,28 +5,49 @@ export default defineConfig({
   description: 'Provider-agnostic TypeScript SDK & CLI for coding-agent harnesses.',
   base: '/neopolitan/',
   cleanUrls: true,
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/neopolitan/favicon.svg' }]],
   themeConfig: {
+    logo: '/logo.svg',
     nav: [
-      { text: 'Guide', link: '/guide/getting-started' },
+      { text: 'Start', link: '/guide/getting-started' },
+      { text: 'Concepts', link: '/concepts/architecture' },
+      { text: 'Patterns', link: '/patterns/provider-swap-handoff' },
       { text: 'Providers', link: '/guide/provider-matrix' },
       { text: 'API Reference', link: '/api/README' },
     ],
     sidebar: [
       {
-        text: 'Guide',
+        text: 'Start',
         items: [
           { text: 'Getting Started', link: '/guide/getting-started' },
-          { text: 'Architecture & DAG', link: '/guide/architecture' },
+          { text: 'CLI Reference', link: '/guide/cli' },
           { text: 'Provider Compatibility Matrix', link: '/guide/provider-matrix' },
-          { text: 'Custom Adapters & Conformance', link: '/guide/custom-adapter' },
-          { text: 'Session Persistence & Handoff', link: '/guide/handoff-and-sessions' },
-          { text: 'Security & Approval Gating', link: '/guide/security-and-gating' },
-          { text: 'Headless RPC Server', link: '/guide/headless-server' },
           { text: 'Comparisons', link: '/guide/comparisons' },
         ],
       },
       {
+        text: 'Core Concepts',
+        items: [
+          { text: 'Architecture & 3-Tier SPI', link: '/concepts/architecture' },
+          { text: 'Canonical Events & Receipts', link: '/concepts/events-and-receipts' },
+          { text: 'Capabilities & Runtimes', link: '/concepts/capabilities-and-runtimes' },
+          { text: 'Auth & Env Isolation', link: '/concepts/auth-and-env' },
+        ],
+      },
+      {
+        text: 'Patterns & Recipes',
+        items: [
+          { text: 'Provider Swap & Hybrid Handoff', link: '/patterns/provider-swap-handoff' },
+          { text: 'Policy Gates & Elicitation', link: '/patterns/policy-gates-and-elicitation' },
+          { text: 'Headless RPC Server (HTTP+SSE & WS)', link: '/patterns/headless-rpc-server' },
+          { text: 'Isolated Worktrees & Code Review', link: '/patterns/worktrees-and-review' },
+          { text: 'Multi-Agent & Quota Fallback', link: '/patterns/multi-agent-orchestration' },
+          { text: 'Custom Adapters & Conformance', link: '/patterns/custom-adapters' },
+        ],
+      },
+      {
         text: 'API Reference',
+        collapsed: true,
         items: [
           { text: 'Package Index', link: '/api/README' },
           { text: 'neopolitan-ai (Umbrella)', link: '/api/neopolitan-ai/README' },
@@ -60,6 +81,10 @@ export default defineConfig({
     socialLinks: [{ icon: 'github', link: 'https://github.com/milesangelo/neopolitan' }],
     editLink: {
       pattern: 'https://github.com/milesangelo/neopolitan/edit/main/docs/:path',
+    },
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Neopolitan Contributors',
     },
     search: {
       provider: 'local',

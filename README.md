@@ -129,6 +129,9 @@ flowchart TD
 ## Examples & Documentation
 
 - **Full Documentation & API Reference:** [milesangelo.github.io/neopolitan](https://milesangelo.github.io/neopolitan/)
+  - [Core Concepts (3-Tier SPI, Events, Runtimes, Auth)](https://milesangelo.github.io/neopolitan/concepts/architecture)
+  - [Patterns & Recipes (Handoff, Policy Gates, RPC Server, Worktrees, Multi-Agent)](https://milesangelo.github.io/neopolitan/patterns/provider-swap-handoff)
+  - [CLI Reference (`doctor`, `run`, `serve`, `handoff`)](https://milesangelo.github.io/neopolitan/guide/cli)
 - **AI / LLM Summary:** [`llms.txt`](./llms.txt)
 - **Contributor & Agent Guide:** [`AGENTS.md`](./AGENTS.md) and [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 - **Runnable Examples:** See [`examples/README.md`](./examples/README.md) (`pnpm run examples:all`).

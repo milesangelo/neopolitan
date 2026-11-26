@@ -1,15 +1,15 @@
 # Neopolitan
 
-> Provider-agnostic, headless TypeScript SDK and zero-dependency CLI for driving coding-agent harnesses (Claude Code, OpenAI Codex, ACP v1/v2 agents, and interactive CLIs) across local, WSL2, Git worktree, and RPC environments.
+> Provider-agnostic, headless TypeScript SDK and zero-dependency CLI (`neopolitan-ai` / `@neopolitan-ai/*`) for driving coding-agent harnesses (Claude Code, OpenAI Codex, ACP v1/v2 agents, and interactive CLIs) across local, WSL2, Git worktree, and RPC environments.
 
 ## Core Design
 - Pure `Promise`, `AsyncIterable`, `AbortSignal`, and Zod contracts in `@neopolitan-ai/core` (zero Electron, Effect-TS, or native binary dependencies).
-- Single unified session SPI: `ProviderDriver` -> `ProviderAdapter` -> `AgentSession`.
+- Three-tier SPI: `ProviderDriver` -> `ProviderAdapter` -> `AgentSession`.
 - Cross-provider continuity via `JsonlEventStore`, `SessionManager.handoff()`, and automatic `redactSecrets()` scrubbing.
 - Fail-closed `GateMiddleware` that never auto-approves disguised elicitations even in `full_access` mode.
 
 ## Packages
-- `neopolitan-ai` (umbrella package + subpaths `neopolitan-ai/acp`, `neopolitan-ai/claude`, `neopolitan-ai/codex`, `neopolitan-ai/pty`, `neopolitan-ai/auth`, `neopolitan-ai/sessions`, `neopolitan-ai/workspace`, `neopolitan-ai/server`, `neopolitan-ai/orchestration` + CLI `neopolitan doctor|run|serve|handoff`)
+- `neopolitan-ai` (umbrella package + subpaths `neopolitan-ai/acp`, `neopolitan-ai/claude`, `neopolitan-ai/codex`, `neopolitan-ai/pty`, `neopolitan-ai/auth`, `neopolitan-ai/sessions`, `neopolitan-ai/workspace`, `neopolitan-ai/server`, `neopolitan-ai/orchestration` + CLI `neopolitan-ai doctor|run|serve|handoff`)
 - `@neopolitan-ai/core`: Core driver SPI, `AgentEvent` union, `ProviderCapabilities`, `EventHub`, `GateMiddleware`, `redactSecrets`
 - `@neopolitan-ai/runtime-local`: `LocalExecutionRuntime`, `WslExecutionRuntime`, `killProcessTree`
 - `@neopolitan-ai/adapter-acp`: ACP v1/v2 adapter over `@agentclientprotocol/sdk/unstable` with flavor presets
@@ -24,11 +24,19 @@
 - `@neopolitan-ai/testing`: `MockExecutionRuntime`, `createMockDriver`, and `@neopolitan-ai/testing/conformance` (`runProviderConformanceSuite`)
 
 ## Documentation Links
+- Home: https://milesangelo.github.io/neopolitan/
 - Getting Started: https://milesangelo.github.io/neopolitan/guide/getting-started
-- Architecture & DAG: https://milesangelo.github.io/neopolitan/guide/architecture
+- CLI Reference: https://milesangelo.github.io/neopolitan/guide/cli
 - Provider Compatibility Matrix: https://milesangelo.github.io/neopolitan/guide/provider-matrix
-- Custom Adapter Authoring & Conformance: https://milesangelo.github.io/neopolitan/guide/custom-adapter
-- Session Persistence & Cross-Provider Handoff: https://milesangelo.github.io/neopolitan/guide/handoff-and-sessions
-- Security & Approval Gating: https://milesangelo.github.io/neopolitan/guide/security-and-gating
-- Headless RPC Server: https://milesangelo.github.io/neopolitan/guide/headless-server
-- API Reference: https://milesangelo.github.io/neopolitan/api/
+- Comparisons: https://milesangelo.github.io/neopolitan/guide/comparisons
+- Concept — Architecture & 3-Tier SPI: https://milesangelo.github.io/neopolitan/concepts/architecture
+- Concept — Canonical Events & Receipts: https://milesangelo.github.io/neopolitan/concepts/events-and-receipts
+- Concept — Capabilities & Runtimes: https://milesangelo.github.io/neopolitan/concepts/capabilities-and-runtimes
+- Concept — Auth & Env Isolation: https://milesangelo.github.io/neopolitan/concepts/auth-and-env
+- Pattern — Provider Swap & Hybrid Handoff: https://milesangelo.github.io/neopolitan/patterns/provider-swap-handoff
+- Pattern — Policy Gates & Elicitation: https://milesangelo.github.io/neopolitan/patterns/policy-gates-and-elicitation
+- Pattern — Headless RPC Server: https://milesangelo.github.io/neopolitan/patterns/headless-rpc-server
+- Pattern — Isolated Worktrees & Review: https://milesangelo.github.io/neopolitan/patterns/worktrees-and-review
+- Pattern — Multi-Agent & Quota Fallback: https://milesangelo.github.io/neopolitan/patterns/multi-agent-orchestration
+- Pattern — Custom Adapters & Conformance: https://milesangelo.github.io/neopolitan/patterns/custom-adapters
+- API Reference: https://milesangelo.github.io/neopolitan/api/README
