@@ -21,39 +21,7 @@ All events share `AgentEventBase`: `{ eventId, seq, sessionId, turnId?, parentBl
 
 ## `EventHub` & Non-Ephemeral Replay
 
-<div class="neo-diagram">
-  <svg viewBox="0 0 820 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="EventHub sequence and afterSeq replay">
-    <defs>
-      <marker id="ev-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--vp-c-text-3)" />
-      </marker>
-    </defs>
-
-    <rect x="20" y="28" width="215" height="96" rx="10" fill="var(--vp-c-bg)" stroke="#E14B6A" stroke-width="2" />
-    <text x="127" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--vp-c-text-1)">hub.emit(event)</text>
-    <text x="127" y="74" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Assigns monotonic seq (1, 2, 3...)</text>
-    <text x="127" y="92" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Buffers unless ephemeral: true</text>
-    <text x="127" y="110" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Pushes live to active iterators</text>
-
-    <line x1="235" y1="76" x2="285" y2="76" stroke="var(--vp-c-text-3)" stroke-width="1.75" marker-end="url(#ev-arrow)" />
-
-    <rect x="289" y="28" width="235" height="96" rx="10" fill="var(--vp-c-bg)" stroke="#C98863" stroke-width="2" />
-    <text x="406" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--vp-c-text-1)">Replay Ring Buffer (2,048)</text>
-    <text x="406" y="74" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Startup session.started never lost</text>
-    <text x="406" y="92" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Late subscribe({ afterSeq })</text>
-    <text x="406" y="110" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">replays seq &gt; afterSeq in order</text>
-
-    <line x1="524" y1="76" x2="574" y2="76" stroke="var(--vp-c-text-3)" stroke-width="1.75" marker-end="url(#ev-arrow)" />
-
-    <rect x="578" y="28" width="222" height="96" rx="10" fill="var(--vp-c-bg)" stroke="#7A462B" stroke-width="2" />
-    <text x="689" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--vp-c-text-1)">TurnItemAccumulator</text>
-    <text x="689" y="74" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Deterministic UI block state:</text>
-    <text x="689" y="92" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">text · reasoning · tool_call</text>
-    <text x="689" y="110" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">file_diff · plan · gate</text>
-
-    <text x="410" y="154" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Strict ordering and afterSeq deduplication are verified by @neopolitan-ai/testing/conformance.</text>
-  </svg>
-</div>
+<NeoDiagram name="events" />
 
 ## 4-Outcome `DispatchReceipt`
 

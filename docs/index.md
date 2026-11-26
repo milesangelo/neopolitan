@@ -124,61 +124,7 @@ await session.sendTurn({ prompt: 'Audit src/auth.ts for timing leaks' });
 
 `@neopolitan-ai/core` has zero dependency on Node child processes, native binaries, Electron, or Effect-TS. Optional `node-pty` lives strictly behind `@neopolitan-ai/adapter-pty`, and `vitest` lives strictly inside `@neopolitan-ai/testing/conformance`.
 
-<div class="neo-diagram">
-  <svg viewBox="0 0 820 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Neopolitan modular package dependency DAG">
-    <defs>
-      <marker id="neo-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--vp-c-text-3)" />
-      </marker>
-    </defs>
-
-    <!-- Umbrella -->
-    <rect x="275" y="16" width="270" height="46" rx="10" fill="var(--vp-c-bg)" stroke="#E14B6A" stroke-width="2" />
-    <text x="410" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="var(--vp-c-text-1)">neopolitan-ai</text>
-    <text x="410" y="52" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Umbrella Re-Exports + Zero-Dep CLI</text>
-
-    <!-- Edges from Umbrella -->
-    <line x1="330" y1="62" x2="155" y2="104" stroke="var(--vp-c-text-3)" stroke-width="1.5" marker-end="url(#neo-arrow)" />
-    <line x1="410" y1="62" x2="410" y2="104" stroke="var(--vp-c-text-3)" stroke-width="1.5" marker-end="url(#neo-arrow)" />
-    <line x1="490" y1="62" x2="665" y2="104" stroke="var(--vp-c-text-3)" stroke-width="1.5" marker-end="url(#neo-arrow)" />
-
-    <!-- Middle Layer: Adapters -->
-    <rect x="24" y="108" width="260" height="72" rx="10" fill="var(--vp-c-bg)" stroke="#C98863" stroke-width="1.75" />
-    <text x="154" y="131" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--vp-c-text-1)">Provider Adapters</text>
-    <text x="154" y="149" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">adapter-claude · adapter-codex</text>
-    <text x="154" y="165" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">adapter-acp · adapter-pty (opt. node-pty)</text>
-
-    <!-- Middle Layer: Stateful Infra -->
-    <rect x="304" y="108" width="212" height="72" rx="10" fill="var(--vp-c-bg)" stroke="#C98863" stroke-width="1.75" />
-    <text x="410" y="131" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--vp-c-text-1)">Stateful Infra</text>
-    <text x="410" y="149" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">sessions · server</text>
-    <text x="410" y="165" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">orchestration</text>
-
-    <!-- Middle Layer: Runtimes, Auth, Workspace -->
-    <rect x="536" y="108" width="260" height="72" rx="10" fill="var(--vp-c-bg)" stroke="#C98863" stroke-width="1.75" />
-    <text x="666" y="131" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--vp-c-text-1)">Runtimes &amp; Environment</text>
-    <text x="666" y="149" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">runtime-local (Local + WSL2)</text>
-    <text x="666" y="165" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">auth (AES-GCM) · workspace (Worktrees)</text>
-
-    <!-- Edges to Core -->
-    <line x1="154" y1="180" x2="310" y2="232" stroke="var(--vp-c-text-3)" stroke-width="1.5" marker-end="url(#neo-arrow)" />
-    <line x1="410" y1="180" x2="410" y2="232" stroke="var(--vp-c-text-3)" stroke-width="1.5" marker-end="url(#neo-arrow)" />
-    <line x1="666" y1="180" x2="510" y2="232" stroke="var(--vp-c-text-3)" stroke-width="1.5" marker-end="url(#neo-arrow)" />
-
-    <!-- Core -->
-    <rect x="190" y="236" width="440" height="58" rx="10" fill="var(--vp-c-bg)" stroke="#7A462B" stroke-width="2" />
-    <text x="410" y="259" text-anchor="middle" font-size="13" font-weight="700" fill="var(--vp-c-text-1)">@neopolitan-ai/core (Pure TS + Zod)</text>
-    <text x="410" y="277" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">ProviderDriver · AgentSession · AgentEvent · GateMiddleware · EventHub · redactSecrets</text>
-
-    <!-- Testing dev-only -->
-    <rect x="24" y="242" width="144" height="46" rx="8" fill="var(--vp-c-bg)" stroke="var(--vp-c-divider)" stroke-dasharray="5 3" stroke-width="1.5" />
-    <text x="96" y="262" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--vp-c-text-1)">@neopolitan-ai/testing</text>
-    <text x="96" y="278" text-anchor="middle" font-size="10.5" fill="var(--vp-c-text-2)">Mocks + /conformance</text>
-    <line x1="168" y1="265" x2="186" y2="265" stroke="var(--vp-c-text-3)" stroke-width="1.5" marker-end="url(#neo-arrow)" />
-
-    <text x="410" y="322" text-anchor="middle" font-size="11" fill="var(--vp-c-text-2)">Verified acyclic by scripts/check-boundaries.mjs and tested across Linux, macOS, and Windows.</text>
-  </svg>
-</div>
+<NeoDiagram name="dag" />
 
 ## Battle-Tested Protocol Hardening
 
