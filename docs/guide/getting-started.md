@@ -1,35 +1,47 @@
 # Getting Started
 
-## 10-Second CLI Quickstart
+Neopolitan works **both** as a zero-dependency CLI for probing local coding agents and running headless RPC servers, and as a modular TypeScript SDK you embed directly in desktop apps, CI workers, or web backends.
 
-Check which coding-agent CLIs are installed on your machine (`claude`, `codex`, `opencode`, `agy`, `gemini`, `amp`):
+## Install
+
+Install the umbrella `neopolitan-ai` package (includes the CLI, core contracts, runtime, adapters, sessions, workspace, server, and orchestration) or install only the `@neopolitan-ai/*` packages you need:
+
+::: code-group
+
+```bash [npm (Umbrella)]
+npm install neopolitan-ai
+```
+
+```bash [pnpm (Umbrella)]
+pnpm add neopolitan-ai
+```
+
+```bash [bun (Umbrella)]
+bun add neopolitan-ai
+```
+
+```bash [Scoped Packages Only]
+pnpm add @neopolitan-ai/core @neopolitan-ai/runtime-local @neopolitan-ai/adapter-codex @neopolitan-ai/sessions
+```
+
+:::
+
+::: tip Requirements
+- **Consumers & Runtime:** Node.js `>= 20.0.0` (`22` or `24` LTS recommended). Pure ESM (`"type": "module"`).
+- **Optional `node-pty`:** `@neopolitan-ai/adapter-pty` marks `node-pty` as an optional `peerDependency`, so installing `neopolitan-ai` triggers zero native C++ builds unless you explicitly use PTY mode.
+:::
+
+## 10-Second CLI Probe
+
+Verify which coding-agent CLIs are available in your environment:
 
 ```bash
 npx neopolitan-ai doctor
 ```
 
-Run a single prompt or expose a headless RPC server:
+Use `--json --require <id>` in CI pipelines or bootstrap scripts to fail fast if a required harness is missing. See the full [CLI Reference](./cli).
 
-```bash
-npx neopolitan-ai run --provider codex "Explain package boundaries"
-npx neopolitan-ai serve --host 127.0.0.1 --port 7420 --token secret
-```
-
-## Installing the SDK
-
-Install the umbrella package (includes the CLI, core contracts, runtime, adapters, sessions, workspace, server, and orchestration):
-
-```bash
-npm install neopolitan-ai
-```
-
-Or install granular scoped packages (`@neopolitan-ai/core`, `@neopolitan-ai/adapter-claude`, `@neopolitan-ai/sessions`, etc.):
-
-```bash
-npm install @neopolitan-ai/core @neopolitan-ai/runtime-local @neopolitan-ai/adapter-codex @neopolitan-ai/sessions
-```
-
-## Minimal Session Example
+## Your First SDK Session (15 Lines)
 
 ```ts
 import {
@@ -39,15 +51,16 @@ import {
   createDefaultRegistry,
 } from 'neopolitan-ai';
 
-const runtime = new LocalExecutionRuntime({ defaultCwd: process.cwd() });
-const manager = new SessionManager(createDefaultRegistry(), new InMemoryEventStore(), { runtime });
+const manager = new SessionManager(createDefaultRegistry(), new InMemoryEventStore(), {
+  runtime: new LocalExecutionRuntime({ defaultCwd: process.cwd() }),
+});
 
-await using session = await manager.open('claude-code', {
+await using session = await manager.open('codex', {
   cwd: process.cwd(),
   permissionMode: 'supervised',
 });
 
-const receipt = await session.sendTurn({ prompt: 'Run vitest and inspect failures' });
+const receipt = await session.sendTurn({ prompt: 'Run vitest and summarize any failures' });
 console.log('Dispatch receipt:', receipt);
 
 for await (const ev of session.events()) {
@@ -55,3 +68,21 @@ for await (const ev of session.events()) {
   if (ev.type === 'turn.completed') break;
 }
 ```
+
+## Mock Testing Without API Keys
+
+Install `@neopolitan-ai/testing` as a `devDependency` to run deterministic tests in Vitest, Node's test runner, or plain scripts — root imports of `@neopolitan-ai/testing` never import `vitest`:
+
+```ts
+import { ProviderRegistry } from '@neopolitan-ai/core';
+import { MockExecutionRuntime, createMockDriver } from '@neopolitan-ai/testing';
+
+const registry = new ProviderRegistry().register(createMockDriver());
+const runtime = new MockExecutionRuntime();
+```
+
+## Where to Go Next
+
+- Learn how the 3-tier SPI works in [Architecture & 3-Tier SPI](/concepts/architecture).
+- Understand canonical streaming in [Canonical Events & Receipts](/concepts/events-and-receipts).
+- Jump straight to production examples in [Provider Swap & Hybrid Handoff](/patterns/provider-swap-handoff).
