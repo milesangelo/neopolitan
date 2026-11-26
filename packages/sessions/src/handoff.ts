@@ -129,6 +129,7 @@ export async function compileHandoffBundle(input: {
 export class SessionManager {
   private readonly activeSessions = new Map<string, AgentSession>();
   private readonly pumpPromises = new Map<string, Promise<void>>();
+  private readonly pendingWrites = new Map<string, Promise<void>>();
 
   constructor(
     private readonly registry: ProviderRegistry,
@@ -166,16 +167,26 @@ export class SessionManager {
     return session;
   }
 
+  private enqueuePersist(sessionId: string, fn: () => Promise<void>): Promise<void> {
+    const prev = this.pendingWrites.get(sessionId) ?? Promise.resolve();
+    const next = prev.then(fn, fn);
+    this.pendingWrites.set(sessionId, next);
+    return next;
+  }
+
   async waitForFlush(sessionId?: string): Promise<void> {
+    // Allow microtasks from EventHub to enter pumpEvents before awaiting pendingWrites
+    await new Promise((r) => setTimeout(r, 15));
     if (sessionId) {
-      await this.pumpPromises.get(sessionId);
+      await this.pendingWrites.get(sessionId);
       return;
     }
-    await Promise.all([...this.pumpPromises.values()]);
+    await Promise.all([...this.pendingWrites.values()]);
   }
 
   async closeAll(): Promise<void> {
     await Promise.all([...this.activeSessions.values()].map((s) => s.close()));
+    await Promise.all([...this.pumpPromises.values()]);
     await this.waitForFlush();
   }
 
@@ -189,18 +200,21 @@ export class SessionManager {
     let lastSeq = 0;
     for await (const ev of session.events()) {
       lastSeq = Math.max(lastSeq, ev.seq);
-      await this.store.append(sessionId, [ev]);
-      if (ev.type === 'turn.completed' || ev.type === 'session.started') {
-        await this.store.saveSnapshot({
-          sessionId,
-          providerId,
-          cwd,
-          anchor: session.getAnchor(),
-          profileId,
-          lastSeq,
-          updatedAt: Date.now(),
-        });
-      }
+      const snapshotSeq = lastSeq;
+      await this.enqueuePersist(sessionId, async () => {
+        await this.store.append(sessionId, [ev]);
+        if (ev.type === 'turn.completed' || ev.type === 'session.started') {
+          await this.store.saveSnapshot({
+            sessionId,
+            providerId,
+            cwd,
+            anchor: session.getAnchor(),
+            profileId,
+            lastSeq: snapshotSeq,
+            updatedAt: Date.now(),
+          });
+        }
+      });
     }
     this.activeSessions.delete(sessionId);
   }
