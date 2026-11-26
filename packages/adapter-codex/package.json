@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@neopolitan-ai/core": "workspace:*",
-    "zod": "^3.25.76"
+    "zod": "^4.6.7"
   },
   "description": "Clean-room OpenAI Codex app-server JSON-RPC/NDJSON adapter with UTF-16 surrogate sanitization and hang watchdog.",
   "keywords": ["neopolitan", "coding-agent", "ai-agent", "sdk", "typescript", "adapter-codex"],
