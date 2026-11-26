@@ -1,0 +1,23 @@
+{
+  "name": "@neopolitan/examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@neopolitan/adapter-acp": "workspace:*",
+    "@neopolitan/adapter-claude": "workspace:*",
+    "@neopolitan/adapter-codex": "workspace:*",
+    "@neopolitan/adapter-pty": "workspace:*",
+    "@neopolitan/auth": "workspace:*",
+    "@neopolitan/core": "workspace:*",
+    "@neopolitan/orchestration": "workspace:*",
+    "@neopolitan/runtime-local": "workspace:*",
+    "@neopolitan/server": "workspace:*",
+    "@neopolitan/sessions": "workspace:*",
+    "@neopolitan/testing": "workspace:*",
+    "@neopolitan/workspace": "workspace:*",
+    "@agentclientprotocol/sdk": "^2.12.0",
+    "zod": "^3.25.76"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "neopolitan",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Provider-agnostic TypeScript SDK for coding-agent harnesses (Claude Code, Codex, ACP, PTY) — every flavor in one container.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/milesangelo/neopolitan.git"
+  },
+  "packageManager": "pnpm@11.24.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "clean": "rm -rf packages/*/dist packages/*/*.tsbuildinfo examples/dist examples/*.tsbuildinfo",
+    "example:handoff": "tsc -b && node examples/dist/01-provider-swap-handoff.js",
+    "example:acp": "tsc -b && node examples/dist/02-acp-client-and-gates.js",
+    "example:server": "tsc -b && node examples/dist/03-headless-rpc-server.js",
+    "example:workspace": "tsc -b && node examples/dist/04-isolated-worktree-review.js",
+    "example:orchestration": "tsc -b && node examples/dist/05-multi-agent-orchestration.js",
+    "examples:all": "tsc -b && node examples/dist/01-provider-swap-handoff.js && node examples/dist/02-acp-client-and-gates.js && node examples/dist/03-headless-rpc-server.js && node examples/dist/04-isolated-worktree-review.js && node examples/dist/05-multi-agent-orchestration.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/ws": "^8.18.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}
